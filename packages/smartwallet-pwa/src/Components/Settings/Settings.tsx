@@ -5,7 +5,6 @@ import toast from 'react-hot-toast';
 import { saveAs } from 'file-saver';
 import { useStyles } from "./styled";
 import IconSecurity from "../../Assets/svg/IconSecurity";
-import IconCreditCard from "../../Assets/svg/IconCreditCard";
 import IconMail from "../../Assets/svg/IconMail";
 import IconPrivacy from "../../Assets/svg/IconPrivacy";
 import Link from "../Link";
@@ -13,56 +12,11 @@ import IconWeb from "../../Assets/svg/IconWeb";
 import IconSpeaker from "../../Assets/svg/IconSpeaker";
 import apiService from "../../services/apiService";
 import { encrypt, getDataFromLS } from "../../services/backupService" ;
-import { LS_PAYMENT_METHOD_KEY, LS_CUSTOMER_KEY, LS_KEY_PAIR, LS_PBKDF_KEY } from "../../Const";
+import { LS_KEY_PAIR, LS_PBKDF_KEY } from "../../Const";
 
 const Settings = () => {
   const classes = useStyles();
   const history = useHistory();
-
-  const [card, setCard] = useState<string>(
-    window.localStorage.getItem(LS_PAYMENT_METHOD_KEY) as string
-  );
-
-  useEffect(() => {
-    const paymentMethod = localStorage.getItem(LS_PAYMENT_METHOD_KEY);
-    if (paymentMethod) {
-      setCard(paymentMethod);
-    }
-  }, [card]);
-
-  console.log(card);
-
-  const deleteCard = async () => {
-    const customer = localStorage.getItem(LS_CUSTOMER_KEY);
-
-    if (!customer) {
-      return toast.error("Customer does not exist", {
-        duration: 2000,
-      });
-    }
-    try {
-      const response = await apiService.post("/user/card-delete", {
-        card,
-        customer,
-      });
-      if (response.status !== 200) {
-        return toast.error("Somer error has ocurred", {
-          duration: 2000,
-        });
-      }
-      localStorage.removeItem(LS_PAYMENT_METHOD_KEY);
-      setCard('');
-    } catch (err) {
-      console.log(err);
-      return toast.error("Somer error has ocurred", {
-        duration: 2000,
-      });
-    }
-
-    return toast.success("Payment card has been successfully removed", {
-      duration: 2000,
-    });
-  };
 
   const generateBackUp = async () => {
     const data = getDataFromLS()
@@ -141,27 +95,7 @@ const Settings = () => {
             </Grid>
           </div>
         </div>
-
         <div>
-          <h1 className={classes.titleH1}>Payment</h1>
-          <div className={classes.contentSetting}>
-            <Fab color="secondary" aria-label="edit" className={classes.fab}>
-              <IconCreditCard />
-            </Fab>
-            <div>
-              <h1 className={classes.titleSettings}>Credit Card</h1>
-
-              {!!card && (
-                <div
-                  className={classes.buttonBlue}
-                  onClick={() => deleteCard()}
-                >
-                  Delete
-                </div>
-              )}
-            </div>
-          </div>
-
           <h1 className={classes.titleH1}>Contact</h1>
           <div className={classes.contentSetting}>
             <Link
