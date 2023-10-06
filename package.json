@@ -1,0 +1,19 @@
+{
+  "name": "healthid",
+  "version": "0.0.1",
+  "repository": "https://github.com/diegotorreslopez81/HealthID.git",
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/file-saver": "^2.0.5",
+    "husky": "^8.0.3",
+    "lerna": "^6.4.1"
+  },
+  "scripts": {
+    "lint": "lerna run lint --stream",
+    "dev": "lerna run dev --stream",
+    "start": "lerna run start --stream",
+    "prepare": "husky install",
+    "precommit": "lint-staged"
+  }
+}
