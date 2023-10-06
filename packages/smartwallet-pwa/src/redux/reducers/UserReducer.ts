@@ -3,19 +3,21 @@ import {
   LS_USER_KEY,
   initialState,
 } from "../../Const";
-export const update = createAction("update");
-export const addDynamicField = createAction("add-dynamic-field");
-export const updateDynamicField = createAction("update-dynamic-field");
-export const loadStoreData = createAction("load_store_data");
-export const addArticles = createAction("add-articles");
-export const importData = createAction("import"); 
+
+const updateAction: any = createAction("update");
+const addDynamicFieldAction: any = createAction("add-dynamic-field");
+const updateDynamicFieldAction: any = createAction("update-dynamic-field");
+const loadStoreDataAction: any = createAction("load_store_data");
+const addArticlesAction: any = createAction("add-articles");
+const importDataAction: any = createAction("import");
 
 const UserReducer = createSlice({
   name: "user",
   initialState,
-  reducers: {
+  reducers: {},
+  extraReducers: {
     //const field = state[action.payload.id] || {}
-    update: (state: any, action) => {
+    [updateAction]: (state: any, action) => {
       let newState;
       const { payload }: { payload: any; } = action;
       console.log(current(state));
@@ -26,7 +28,7 @@ const UserReducer = createSlice({
       return newState;
     },
 
-    addDynamicField: (state, action) => {
+    [addDynamicFieldAction]: (state, action) => {
       let newState;
       const { payload } = action;
       console.log(current(state));
@@ -39,7 +41,7 @@ const UserReducer = createSlice({
       return newState;
     },
 
-    updateDynamicField: (state: any, action) => {
+    [updateDynamicFieldAction]: (state: any, action) => {
       let newState;
       const { payload } = action;
       console.log(current(state));
@@ -57,7 +59,7 @@ const UserReducer = createSlice({
       return newState;
     },
 
-    addArticles: (state: any, action) => {
+    [addArticlesAction]: (state: any, action) => {
       let newState = {
         ...state,
         articles: [...state.articles, action.payload],
@@ -66,10 +68,10 @@ const UserReducer = createSlice({
       return newState;
     },
 
-    loadStoreData: (state, action) => {
+    [loadStoreDataAction]: (state, action) => {
       return action.payload;
     },
-    importData: (state, action) => {
+    [importDataAction]: (state, action) => {
       const data = action.payload;
       const dataKeys = Object.keys(data);
 
@@ -97,4 +99,6 @@ const UserReducer = createSlice({
   },
 });
 
-export default UserReducer.reducer;
+const { reducer } = UserReducer;
+
+export default reducer;

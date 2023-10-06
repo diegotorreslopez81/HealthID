@@ -78,6 +78,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/workbox-core": "^5.0.0",
     "prettier": "2.3.2",
-    "serve": "^12.0.0"
+    "serve": "^12.0.0",
+    "typescript": "^5.2.2"
   }
 }

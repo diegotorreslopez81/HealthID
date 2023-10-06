@@ -17,7 +17,7 @@ const EditDateBirth = () => {
   const dispatchUserData = useDispatch();
 
   const datebirthValue = useSelector(
-    (state: any) => state.UserReducer[credential_birthday].value
+    (state: any) => state.store[credential_birthday].value
   );
 
   const [dateBirth, setDateBirth] = useState(moment().format("DD-MM-yyyy"));

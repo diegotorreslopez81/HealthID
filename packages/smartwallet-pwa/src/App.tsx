@@ -13,6 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import PWAPrompt from 'react-ios-pwa-prompt'
 import toast from 'react-hot-toast';
 import Badge from "@material-ui/core/Badge";
+import { DefaultEventsMap } from "socket.io-client/build/typed-events";
 import Header from "./Components/Header";
 import BackupQuestions from './Components/BackupQuestions';
 import SwUpdater from "./SwUpdater";
@@ -27,7 +28,6 @@ import {
 import { updateCredential, getPendingResponses } from './services/SocketUtils';
 import { ContextProvider } from "./AppContext";
 import "./App.css";
-import { DefaultEventsMap } from "socket.io-client/build/typed-events";
 
 const useStyles = makeStyles((theme) => ({
   root: {

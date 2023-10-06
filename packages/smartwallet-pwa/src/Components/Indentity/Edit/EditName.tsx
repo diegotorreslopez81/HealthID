@@ -12,9 +12,9 @@ const EditName = () => {
   const [lastName, setLastName] = useState("");
   const history = useHistory();
   const dispatchUserData = useDispatch();
-  const nameValue = useSelector((state: any) => state.UserReducer.name.value);
+  const nameValue = useSelector((state: any) => state.store.name.value);
   const lastNameValue = useSelector(
-    (state: any) => state.UserReducer.lastName.value
+    (state: any) => state.store.lastName.value
   );
 
   const handleReturn = () => {

@@ -14,7 +14,7 @@ const EditEmail = () => {
   const history = useHistory();
   const dispatchUserData = useDispatch();
   const emailValue = useSelector(
-    (state: any) => state.UserReducer[credential_email].value
+    (state: any) => state.store[credential_email].value
   );
 
   const handleClick = (event: any) => {

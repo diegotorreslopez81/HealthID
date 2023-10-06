@@ -14,7 +14,7 @@ const EditMobile = () => {
   const [mobilePhone, setMobile] = useState("");
   const dispatchUserData = useDispatch();
   const mobileValue = useSelector(
-    (state: any) => state.UserReducer[credential_mobil].value
+    (state: any) => state.store[credential_mobil].value
   );
 
   const handleClick = (event: any) => {

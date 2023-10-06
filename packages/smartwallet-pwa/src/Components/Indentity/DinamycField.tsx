@@ -17,8 +17,8 @@ export default function DinamycField({ values, index }: any) {
   const [file, setFile] = useState(null);
   const dispatchUserData = useDispatch();
   const userId = localStorage.getItem(LS_DID_KEY);
-  const status = useSelector((state: any) => state.UserReducer.dynamicFields[index].status);
-  const pending = useSelector((state: any) => state.UserReducer.dynamicFields[index].pending);
+  const status = useSelector((state: any) => state.store.dynamicFields[index].status);
+  const pending = useSelector((state: any) => state.store.dynamicFields[index].pending);
 
   const credential = async (file: File) => {
     if(!values.value){

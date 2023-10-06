@@ -7,7 +7,7 @@ import { useStyles } from "./style";
 import ArrowLeft from "../../../Assets/svg/ArrowLeft";
 
 const EditField = () => {
-  const dynamycFields = useSelector((state: any) => state.UserReducer.dynamicFields);
+  const dynamycFields = useSelector((state: any) => state.store.dynamicFields);
   const classes = useStyles();
   const history = useHistory();
   const [title, setTitle] = useState("");

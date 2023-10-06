@@ -14,10 +14,10 @@ import { LS_DID_KEY , BYTES_TO_MB, MAX_IMAGE_SIZE} from "../../Const";
 
 export default function Field({ to, path, title }: any) {
   const [file, setFile] = useState(null);
-  const state = useSelector((state: any) => state.UserReducer[path].value);
-  const id = useSelector((state: any) => state.UserReducer[path].id);
-  const status = useSelector((state: any) => state.UserReducer[path].status);
-  const pending = useSelector((state: any) => state.UserReducer[path].pending);
+  const state = useSelector((state: any) => state.store[path].value);
+  const id = useSelector((state: any) => state.store[path].id);
+  const status = useSelector((state: any) => state.store[path].status);
+  const pending = useSelector((state: any) => state.store[path].pending);
   const userId = localStorage.getItem(LS_DID_KEY);
   const dispatchUserData = useDispatch();
   const classes: any = useStyles();

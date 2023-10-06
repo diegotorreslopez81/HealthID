@@ -1,3 +1,4 @@
+// @ts-ignore
 window.global ||= window;
 import React from "react";
 import ReactDOM from "react-dom";
@@ -13,8 +14,6 @@ import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { Toaster } from 'react-hot-toast';
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 import store from "./redux/store";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
@@ -38,29 +37,25 @@ const theme = responsiveFontSizes(
   })
 );
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY as string);
-
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
-        <Elements stripe={stripePromise}>
-          <Provider store={store}>
-            <Toaster
-              position="bottom-center"
-              toastOptions={{
-                duration: 2000,
-                error: {
-                  duration: 5000,
-                },
-              }}
-            />
-            <MuiPickersUtilsProvider utils={MomentUtils} libInstance={moment}>
-              <App />
-            </MuiPickersUtilsProvider>
-          </Provider>
-        </Elements>
+        <Provider store={store}>
+          <Toaster
+            position="bottom-center"
+            toastOptions={{
+              duration: 2000,
+              error: {
+                duration: 5000,
+              },
+            }}
+          />
+          <MuiPickersUtilsProvider utils={MomentUtils} libInstance={moment}>
+            <App />
+          </MuiPickersUtilsProvider>
+        </Provider>
       </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>,

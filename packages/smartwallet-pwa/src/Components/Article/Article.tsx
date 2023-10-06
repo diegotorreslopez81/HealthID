@@ -8,7 +8,7 @@ import { LS_DID_KEY } from "../../Const";
 
 const Article = () => {
   const classes: any = useStyles();
-  const articles = useSelector((state: any) => state.UserReducer.articles);
+  const articles = useSelector((state: any) => state.store.articles);
 
   const handleClick = async (url: string) => {
     const userId = localStorage.getItem(LS_DID_KEY);

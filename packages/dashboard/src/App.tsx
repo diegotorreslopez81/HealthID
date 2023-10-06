@@ -5,11 +5,8 @@ import io, { Socket } from "socket.io-client";
 import { Toaster } from 'react-hot-toast';
 import { auth } from "./Services/firebaseService";
 import PrivateRoute from "./PrivateRoute";
-import Publishers from "./Components/Publishers";
 import Issuer from "./Components/Issuer";
 import Request from "./Components/Issuer/UserRequest/Request"
-import PremiumContent from "./Components/PremiumContent";
-import Settings from "./Components/Settings";
 import Header from "./Components/Header";
 import Admin from "./Components/Admin";
 import Login from "./Components/Login";
@@ -19,7 +16,6 @@ import { getRoleFromUserClaims } from "./Services/utilsService";
 import {
   ROLES_DEFAULT_ROUTES,
   ROLE_ADMIN,
-  ROLE_PUBLISHER,
   ROLE_ISSUER,
   LS_KEY_TOKEN,
 } from "./Constants";
@@ -121,24 +117,6 @@ function App() {
         <Container>
           <Switch>
             <Route exact path="/auth" component={Login} />
-            <PrivateRoute
-              exact
-              path="/publishers"
-              component={Publishers}
-              allowedRoles={[ROLE_PUBLISHER]}
-            />
-            <PrivateRoute
-              exact
-              path="/mycontent"
-              component={PremiumContent}
-              allowedRoles={[ROLE_PUBLISHER]}
-            />
-            <PrivateRoute
-              exact
-              path="/publishers/settings"
-              component={Settings}
-              allowedRoles={[ROLE_PUBLISHER]}
-            />
             <PrivateRoute
               exact
               path="/admin"

@@ -26,15 +26,15 @@ const Identity = () => {
   const classes: any = useStyles();
   const dispatchUserData = useDispatch();
   const [file,setFile] = useState(null);
-  const name = useSelector((state: any) => state.UserReducer.name.value);
-  const lastName = useSelector((state: any) => state.UserReducer.lastName.value);
-  const dinamycFields = useSelector((state: any) => state.UserReducer.dynamicFields);
+  const name = useSelector((state: any) => state.store.name.value);
+  const lastName = useSelector((state: any) => state.store.lastName.value);
+  const dinamycFields = useSelector((state: any) => state.store.dynamicFields);
   const postal = useSelector(
-    (state: any) => state.UserReducer[credential_address].value
+    (state: any) => state.store[credential_address].value
   );
-  const id = useSelector((state: any) => state.UserReducer[credential_address].id);
-  const status = useSelector((state: any) => state.UserReducer[credential_address].status);
-  const pending = useSelector((state: any) => state.UserReducer[credential_address].pending);
+  const id = useSelector((state: any) => state.store[credential_address].id);
+  const status = useSelector((state: any) => state.store[credential_address].status);
+  const pending = useSelector((state: any) => state.store[credential_address].pending);
   const userId = localStorage.getItem(LS_DID_KEY);
 
   const credential = async (file: File) => {
