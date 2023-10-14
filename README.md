@@ -27,10 +27,10 @@
 <br />
 <table align="center"><tr><td align="center" width="9999">
   <a href="https://github.com/diegotorreslopez81/HealthID">
-    <img src="images/logo.png" alt="Logo" height="80" align="center">
+    <img src="images/logo.png" alt="Logo" height="250" align="center">
   </a>
 
-  <h1 align="center">The world's simplest paywall</h1>
+  <h1 align="center">Own Data Health</h1>
 
   <p align="center">
     Welcome to our project
@@ -237,7 +237,7 @@ If you have made a Pull Request, see our guide to [contributing](./CONTRIBUTING.
 ## Terms and License
 
 - Released under the [MIT](./LICENSE).
-- Copyright 2021 [Infinite Labs](https://infinitelabs.co/).
+- Copyright 2023 [Infinite Labs](https://infinitelabs.co/).
 - Use it for personal and commercial projects, but please don’t republish, redistribute, or resell the application.
 
 <!-- ABOUT US -->
