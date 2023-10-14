@@ -18,7 +18,7 @@
 ![License](https://img.shields.io/badge/dynamic/json.svg?label=License&url=https://gitlab.com/api/v4/projects/24010546?license=true&query=license.name&colorB=yellow)
 <!--[![Starters](https://badgen.net/github/stars/HealthID)](https://github.com/diegotorreslopez81/HealthID)
 [![Forks](https://badgen.net/github/forks/HealthID)](https://github.com/diegotorreslopez81/HealthID/network/members)-->
-[![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&colorB=555)](https://www.linkedin.com/company/HealthID)
+[![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&colorB=555)](https://www.linkedin.com/company/infinitelabs-co/)
 <!-- [![Twitter](https://img.shields.io/badge/-Twitter-black.svg?logo=twitter&colorB=555)](https://www.twitter.com/HealthID_co)-->
 [![Web](https://img.shields.io/badge/-Web-black.svg?logo=firefox&colorB=555)](https://owndata.health/)
 
