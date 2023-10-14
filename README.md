@@ -39,8 +39,8 @@
     <br />
     </td></tr></table>
 <ol>
-<li><a href="https://box.pdata.org/cloud/index.php/s/4D3HEH4wRCn6CEZ">HealthID presentation</a></li>
-<!-- <li><a href="https://app.dashboard.HealthID.co">View Dashboard</a></li>
+<!--<li><a href="https://box.pdata.org/cloud/index.php/s/4D3HEH4wRCn6CEZ">HealthID presentation</a></li>
+<li><a href="https://app.dashboard.HealthID.co">View Dashboard</a></li>
 <li><a href="https://app.wallet.HealthID.co">View Mobile PWA</a></li>
 <li><a href="https://demo.HealthID.co">Demo Web Content</a></li> -->
 <li><a href="https://github.com/diegotorreslopez81/HealthID/issues">Report Bug</a></li>
