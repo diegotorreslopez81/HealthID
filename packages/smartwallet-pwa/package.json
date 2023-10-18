@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build",
-    "dev": "vite preview",
+    "dev": "vite",
+    "build": "tsc --skipLibCheck && vite build",
+    "prev": "vite preview",
     "start-build": "serve -s build",
     "deploy:staging": "scp -r build infinitelabs:/home/ubuntu/site/pwa",
     "build:deploy": "yarn  build && yarn deploy:staging",

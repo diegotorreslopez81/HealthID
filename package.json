@@ -13,6 +13,7 @@
     "lint": "lerna run lint --stream",
     "dev": "lerna run dev --stream",
     "start": "lerna run start --stream",
+    "build": "lerna run build --stream",
     "prepare": "husky install",
     "precommit": "lint-staged"
   }

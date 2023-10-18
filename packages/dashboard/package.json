@@ -36,8 +36,9 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build",
-    "dev": "vite preview",
+    "dev": "vite",
+    "build": "tsc --skipLibCheck && vite build",
+    "prev": "vite preview",
     "build:staging": "env-cmd -f .env.staging react-scripts build",
     "deploy:staging": "scp -r build infinitelabs:/home/ubuntu/site/dashboard",
     "build:deploy": "npm run build:staging && npm run deploy:staging",

@@ -20,7 +20,6 @@ function Editor({
   const [title, setTitle] = useState(defaultData.title);
   const [editorjs, setEditorjs] = useState<EditorJS | undefined>();
   const titleRef: MutableRefObject<HTMLSpanElement | undefined> = useRef();
-  const [description, setDescription] = useState(defaultData.description || '');
 
   const saveContent = async (api: any) => {
     const editorData = await api.saver.save();
@@ -37,7 +36,7 @@ function Editor({
     //const cid = await pinFileToIPFS(file);
     //const url = getIpfsUrl(`ipfs://${cid.toString()}`);
     //TODO: Save the article in somewhere
-    const url = atob(await file.text());
+    const url = URL.createObjectURL(file);
     return {
       success: 1,
       file: {
@@ -89,7 +88,6 @@ function Editor({
         },
       });
       await editor.isReady;
-      editor.blocks.insert('gatedContentDelimiter');
       setEditorjs(editor);
     } catch (err) {
       console.error(err);
@@ -106,9 +104,8 @@ function Editor({
       ...defaultData,
       title,
       content,
-      description,
     });
-  }, [content, title, description]);
+  }, [content, title]);
 
   useEffect(() => {
     if (error.title) {
@@ -120,15 +117,15 @@ function Editor({
   }, [error]);
 
   return (
-    <div className="relative">
-      <div className="relative">
-        <div className="flex justify-center mt-2">
+    <div>
+      <div style={{ width: "100%" }}>
+        <div style={{ width: "100%" }}>
           {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
           <span
             ref={titleRef as LegacyRef<HTMLSpanElement>}
             contentEditable
             id="contenteditable-title"
-            className="mt-4 block w-full border-none focus:ring-0 text-3xl p-0 font-bold bg-transparent leading-tight text-black dark:text-white resize-none cursor-text placeholder:text-gray-600"
+            style={{ width: "100%" }}
             placeholder="Write your title"
             onInput={(e) => {
               setTitle(e.currentTarget.textContent);
@@ -145,18 +142,6 @@ function Editor({
         {error.title && (
           <p className="text-sm text-red-600">You need to write a title.</p>
         )}
-        <div className="mb-8">
-          <textarea
-            className="block w-full bg-gray-50 dark:bg-dark-700 dark:placeholder-dark-400 dark:text-dark-100 !border-transparent focus:!border-transparent focus:!border-none focus:!outline-none focus:ring-0 text-sm rounded-md px-4 py-4 h-12 focus:h-72 max-h-[700px] overflow-y-scroll focus:outline-primary-500 line-clamp-1 focus:line-clamp-none transition-all duration-300 leading-7 focus:delay-100:leading-normal ease-out resize-none max-w-xl"
-            id="description"
-            value={description}
-            placeholder={"Condition Resume"}
-            onChange={(e: any) => {
-              setDescription(e.target.value);
-            }}
-          />
-        </div>
-
         <div className="content col-span-full">
           <div id="editorjs" />
         </div>

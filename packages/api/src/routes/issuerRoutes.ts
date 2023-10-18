@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import { zencode_exec } from "zenroom";
 import { DateTime } from "luxon";
 import axios from 'axios';
@@ -254,6 +254,12 @@ router.post("/w3c-sign", async (req, res) => {
     console.log(error);
     res.status(400).json({ ready: false, error });
   }
+});
+
+router.post("/report", (req: Request, res: Response) => {
+  const { content } = req.body;
+  console.log(content);
+  res.status(200).send("Ok")
 });
 
 export default router;

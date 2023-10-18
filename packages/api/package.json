@@ -9,7 +9,7 @@
     "start": "node --inspect -r dotenv/config build/app.js",
     "predev": "docker-compose up -d",
     "dev": "nodemon --watch src --watch build -e ts --config nodemon.json -r dotenv/config build/app.js --inspect",
-    "build": "yarn tsc",
+    "build": "tsc --skipLibCheck",
     "docs:build": "documentation build ./app.js --config documentation.yml -f html --github -o docs",
     "docs:lint": "documentation lint ./app.js"
   },
