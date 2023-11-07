@@ -101,7 +101,7 @@
 
 ### What is HealthID?
 
-Take control of your health information with Health ID. Our self-sovereign identity system empowers patients to securely store and manage their medical data while giving only qualified professionals access. Using blockchain, IPFS, and W3C standards, Health ID offers a user-centric and innovative solution to the challenges of medical data management.
+Take control of your health information with Health ID. Our self-sovereign identity system empowers patients to securely store and manage their medical data while giving only qualified professionals access. Using blockchain, decentralized storage, and W3C standards, Health ID offers a user-centric and innovative solution to the challenges of medical data management.
 
 
 
