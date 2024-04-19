@@ -125,7 +125,7 @@ const Login = () => {
     try {
       setIsLoading(true);
       const userCredential = await signInWithPopup(auth, provider);
-      const userExist = await apiService.post("", { uid: userCredential.user.uid });
+      const userExist = await apiService.post("/register/userExist", { uid: userCredential.user.uid });
       let tokenData;
 
       if (!userExist.data.exist) {
@@ -176,38 +176,38 @@ const Login = () => {
       </Grid>
       <Grid container justify-content='center' className={classes.claims}>
         <Grid item xs={1}>
-          <Typography 
+          <Typography
             onClick={() => {
               setUserType(ROLE_PUBLISHER)
               setError({
                 message: '',
                 origin: '',
               });
-            }} 
+            }}
             variant='body2'
-            className={ 
-              userType === ROLE_PUBLISHER ? 
-                classes.publisherButton : 
-                classes.clearSwitchPublisherButton 
+            className={
+              userType === ROLE_PUBLISHER ?
+                classes.publisherButton :
+                classes.clearSwitchPublisherButton
             }
           >
             For publisher
           </Typography>
         </Grid>
         <Grid item xs={1}>
-          <Typography 
+          <Typography
             onClick={() => {
               setUserType(ROLE_ISSUER)
               setError({
                 message: '',
                 origin: '',
               });
-            }} 
+            }}
             variant='body2'
-            className={ 
+            className={
               userType === ROLE_PUBLISHER ?
-                classes.clearSwitchUserButton : 
-                classes.userButton 
+                classes.clearSwitchUserButton :
+                classes.userButton
             }
           >
             For issuers
@@ -224,7 +224,7 @@ const Login = () => {
           </Grid>
           <Grid container item xs={9} justify-content="center" className={classes.root}>
             <Paper className={classes.paper}>
-              { userType === ROLE_PUBLISHER ? !forgotPassword? (
+              {userType === ROLE_PUBLISHER ? !forgotPassword ? (
                 <>
                   <Grid container justify-content="center">
                     <Typography variant="subtitle1" className={classes.subTitle}>
@@ -285,9 +285,9 @@ const Login = () => {
                     </Grid>
                     {isLogin && (
                       <Grid container justify-content="center">
-                        <Typography 
-                          onClick={() => setForgotPassword(true)} 
-                          className={classes.labels} 
+                        <Typography
+                          onClick={() => setForgotPassword(true)}
+                          className={classes.labels}
                           variant="body2"
                         >
                           Forgot your password?
@@ -307,7 +307,7 @@ const Login = () => {
                     </Grid>
                   </Grid>
                 </>
-                ): <ForgotPassword close={setForgotPassword}/>
+              ) : <ForgotPassword close={setForgotPassword} />
                 : (
                   <>
                     <Grid container justify-content="center">
@@ -334,24 +334,24 @@ const Login = () => {
                         />
                       </Grid>
                       <Grid container item xs={8} justify-content="center">
-                      <FormHelperText error={error?.origin === "email"}>
-                        {error?.origin === "email" && error?.message}
-                      </FormHelperText>
-                    </Grid>
-                    <Grid container justify-content="center">
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleLoginEmail}
-                        className={classes.button}
-                      >
-                        Login
-                      </Button>
-                    </Grid>
+                        <FormHelperText error={error?.origin === "email"}>
+                          {error?.origin === "email" && error?.message}
+                        </FormHelperText>
+                      </Grid>
                       <Grid container justify-content="center">
-                        <Typography 
-                          onClick={() => setForgotPassword(true)} 
-                          className={classes.labels} 
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={handleLoginEmail}
+                          className={classes.button}
+                        >
+                          Login
+                        </Button>
+                      </Grid>
+                      <Grid container justify-content="center">
+                        <Typography
+                          onClick={() => setForgotPassword(true)}
+                          className={classes.labels}
                           variant="body2"
                         >
                           Forgot your password?
@@ -362,52 +362,52 @@ const Login = () => {
                 )
               }
             </Paper>
-            { userType === ROLE_PUBLISHER && !forgotPassword && (
+            {userType === ROLE_PUBLISHER && !forgotPassword && (
+              <Grid
+                container
+                justify-content="center"
+                className={classes.publisherProviderButtons}
+              >
+                <Grid item className={classes.facebookButtonContainer}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handleLoginProvider(PROVIDER_FACEBOOK)}
+                    className={classes.facebookButton}
+                  >
+                    <FacebookLogo />
+                    &nbsp; Login with Facebook
+                  </Button>
+                </Grid>
                 <Grid
                   container
                   justify-content="center"
-                  className={classes.publisherProviderButtons}
+                  className={classes.googleButtonContainer}
                 >
-                  <Grid item className={classes.facebookButtonContainer}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => handleLoginProvider(PROVIDER_FACEBOOK)}
-                      className={classes.facebookButton}
-                    >
-                      <FacebookLogo />
-                      &nbsp; Login with Facebook
-                    </Button>
-                  </Grid>
-                  <Grid
-                    container
-                    justify-content="center"
-                    className={classes.googleButtonContainer}
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handleLoginProvider(PROVIDER_GOOGLE)}
+                    className={classes.googleButton}
                   >
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => handleLoginProvider(PROVIDER_GOOGLE)}
-                      className={classes.googleButton}
-                    >
-                      <GoogleLogo />
-                      &nbsp; Login with Google
-                    </Button>
-                    <Grid container item xs={10} justify-content="flex-end">
-                      <Grid container item xs={12} justify-content="center">
-                        <FormHelperText
-                          error={
-                            error?.origin === PROVIDER_GOOGLE ||
-                            error?.origin === PROVIDER_FACEBOOK
-                          }
-                        >
-                          {error?.origin !== "email" && error?.message}
-                        </FormHelperText>
-                      </Grid>
+                    <GoogleLogo />
+                    &nbsp; Login with Google
+                  </Button>
+                  <Grid container item xs={10} justify-content="flex-end">
+                    <Grid container item xs={12} justify-content="center">
+                      <FormHelperText
+                        error={
+                          error?.origin === PROVIDER_GOOGLE ||
+                          error?.origin === PROVIDER_FACEBOOK
+                        }
+                      >
+                        {error?.origin !== "email" && error?.message}
+                      </FormHelperText>
                     </Grid>
                   </Grid>
                 </Grid>
-              )
+              </Grid>
+            )
             }
           </Grid>
         </Grid>

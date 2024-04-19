@@ -58,7 +58,8 @@ const QrCode = () => {
       setIsLoading(true);
 
       const body = {
-        isSensitiveContent: request.isSensitiveContent,
+        issuerId: userId,
+        userId: socketResponse.userId,
         content: request.content,
       };
 
@@ -76,7 +77,7 @@ const QrCode = () => {
   useEffect(() => {
     const handshake = (data: any) => {
       console.log(data)
-      const newData = { ...socketResponse, data };
+      const newData = { ...socketResponse, ...data };
       setSocketResponse(newData);
       toast("initiating handshake");
       socket?.current?.emit("finishHandshake", { ...newData, issuerId: userId });
@@ -119,13 +120,19 @@ const QrCode = () => {
 
   return (
     <>
-      <SectionTitle title="QrCode" />
-      <Grid container spacing={3} className={classes.marginBottom}>
-        <div ref={ref}></div>
-      </Grid>
+      {
+        !Boolean(socketResponse!.idProvider) && (
+          <>
+            <SectionTitle title="QrCode" />
+            <Grid container spacing={3} className={classes.marginBottom}>
+              <div ref={ref}></div>
+            </Grid>
+          </>
+        )
+      }
       {Boolean(socketResponse!.idProvider) && (
         <>
-          <SectionTitle title="Editor" />
+          <SectionTitle title="Medical Report" />
           <Grid container spacing={3} className={classes.marginBottom}>
             <div style={{ width: "100%" }} >
               <Editor
@@ -140,7 +147,7 @@ const QrCode = () => {
               color="primary"
               onClick={sendReport}
             >
-              send data
+              send record
             </Button>
           </Grid>
         </>

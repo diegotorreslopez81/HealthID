@@ -10,6 +10,7 @@ const updateDynamicFieldAction: any = createAction("update-dynamic-field");
 const loadStoreDataAction: any = createAction("load_store_data");
 const addArticlesAction: any = createAction("add-articles");
 const importDataAction: any = createAction("import");
+const addReport = createAction("add-report");
 
 const UserReducer = createSlice({
   name: "user",
@@ -68,10 +69,10 @@ const UserReducer = createSlice({
       return newState;
     },
 
-    [loadStoreDataAction]: (state, action) => {
+    [loadStoreDataAction]: (_, action) => {
       return action.payload;
     },
-    [importDataAction]: (state, action) => {
+    [importDataAction]: (_, action) => {
       const data = action.payload;
       const dataKeys = Object.keys(data);
 
@@ -94,6 +95,32 @@ const UserReducer = createSlice({
         }
       });
 
+      return newState;
+    },
+
+    [addReport.toString()]: (state: any, action: any) => {
+      const oldReportsId = new Set();
+      const newReports: any[] = [];
+
+      state.reports.forEach((report: any) => {
+        if (!oldReportsId.has(report._id)) {
+          oldReportsId.add(report._id);
+          newReports.push(report);
+        }
+      });
+
+      action.payload.forEach((report: any) => {
+        if (!oldReportsId.has(report._id)) {
+          oldReportsId.add(report._id);
+          newReports.push(report);
+        }
+      });
+
+      let newState = {
+        ...state,
+        reports: newReports,
+      };
+      localStorage.setItem(LS_USER_KEY, JSON.stringify(newState));
       return newState;
     },
   },

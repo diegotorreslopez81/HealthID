@@ -10,11 +10,13 @@ import IconEdit from "../../Assets/svg/IconEdit";
 import Check from "../../Assets/svg/Check";
 import PendingDocument from "../../Assets/svg/PendingDocument";
 import LoadingButton from "../Utils/LoadingButton";
-import { LS_DID_KEY , BYTES_TO_MB, MAX_IMAGE_SIZE} from "../../Const";
+import { LS_DID_KEY, BYTES_TO_MB, MAX_IMAGE_SIZE } from "../../Const";
 
 export default function Field({ to, path, title }: any) {
-  const [file, setFile] = useState(null);
-  const state = useSelector((state: any) => state.store[path].value);
+  const [_, setFile] = useState(null);
+  const state = useSelector((state: any) => {
+    return state.store[path].value
+  });
   const id = useSelector((state: any) => state.store[path].id);
   const status = useSelector((state: any) => state.store[path].status);
   const pending = useSelector((state: any) => state.store[path].pending);
@@ -25,20 +27,20 @@ export default function Field({ to, path, title }: any) {
   const credential = async (file: File) => {
     if (state !== "") {
 
-      const payload = { id: `${id}`, value: `${state}`, pending:true };
+      const payload = { id: `${id}`, value: `${state}`, pending: true };
 
       const credential_type = `${id}`
 
-      try{
-        if(file.size > MAX_IMAGE_SIZE){
-          return toast.error(`The image should not be bigger than ${BYTES_TO_MB(MAX_IMAGE_SIZE)-1} mb`);
+      try {
+        if (file.size > MAX_IMAGE_SIZE) {
+          return toast.error(`The image should not be bigger than ${BYTES_TO_MB(MAX_IMAGE_SIZE) - 1} mb`);
         }
         const formData = new FormData();
-        
+
         formData.append("image", file);
         const url = `/user/upload-image?userId=${userId}&credential_type=${credential_type}`
-        console.log('formData',formData.getAll("image"));
-        const image = await apiService.post(url , formData, {
+        console.log('formData', formData.getAll("image"));
+        const image = await apiService.post(url, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -46,7 +48,7 @@ export default function Field({ to, path, title }: any) {
 
         console.log('image', image)
         await createRequestToIssuer(credential_type, userId as string, image.data.image, state);
-      } catch(err) {
+      } catch (err) {
         console.log(err)
         return toast.error("Some error has occurred, please check your internet connection")
       }
@@ -55,9 +57,9 @@ export default function Field({ to, path, title }: any) {
         type: "update",
         payload,
       });
-    
+
       return toast.success("Request created, please wait until the data is validated")
-    
+
     } else {
       toast.error("Add a value to the identity");
     }
@@ -85,13 +87,20 @@ export default function Field({ to, path, title }: any) {
     const _file = event.target.files[0];
     console.log(event.target.files)
     console.log(_file)
-    if(!_file){
+    if (!_file) {
       return toast.error("You need to upload a document to verify the information!");
     }
     setFile(_file);
     onClick();
     credential(_file);
   }
+
+  const displayState = () => {
+    if (!state) {
+      return <span className={classes.add}>+ add</span>;
+    }
+    return state;
+  };
 
   return (
     <>
@@ -121,7 +130,7 @@ export default function Field({ to, path, title }: any) {
               style={{ textDecoration: "none" }}
             >
               <h1 className={classes.name}>
-                {state || <span className={classes.add}>+ add</span>}
+                {displayState()}
               </h1>
             </Link>
           </div>
@@ -135,7 +144,7 @@ export default function Field({ to, path, title }: any) {
                 <div className={classes.check}>
                   <Check />
                 </div>
-              ): (
+              ) : (
                 <LoadingButton
                   loading={loading}
                   done={finished}

@@ -24,9 +24,17 @@ const http = new HTTPServer(app);
 const port = process.env.PORT;
 
 app.use(cors({ origin: process.env.CORS }));
-app.use(express.json());
+app.use(express.json({
+  type: ["application/json", "text/plain"],
+  verify: (req, _, buf, encoding) => {
+    console.log("VERIFY encoding: ", encoding);
+    console.log("VERIFY rawBody: ", buf.toString());
+    // @ts-ignore
+    req.rawBody = buf;
+  }
+}));
 
-app.get("/", (req, res) => {
+app.get("/", (_, res) => {
   res.send("Welcome to the moncon API!");
 });
 
@@ -115,7 +123,7 @@ io.on("connection", (socket) => {
     if (!data.userId) {
       return
     }
-    console.log("changedCredentialRequestStatus",data)
+    console.log("changedCredentialRequestStatus", data)
     socket.broadcast.to(data.userId).emit("updateCredentialStatus", data);
   });
 
@@ -123,7 +131,7 @@ io.on("connection", (socket) => {
     if (!data._id) {
       return
     }
-    console.log("changeCredentialRequestRecived",data)
+    console.log("changeCredentialRequestRecived", data)
     const request = await CredentialRequestModel.findById(data._id);
     request.recived = true;
     request.signedCredential = {};

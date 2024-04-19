@@ -33,17 +33,22 @@ function Editor({
   };
 
   const uploadImage = async (file: File) => {
-    //const cid = await pinFileToIPFS(file);
-    //const url = getIpfsUrl(`ipfs://${cid.toString()}`);
-    //TODO: Save the article in somewhere
-    const url = URL.createObjectURL(file);
+    const arrayBuffer = await file.arrayBuffer();
+    const bytes = new Uint8Array(arrayBuffer);
+    const len = bytes.length;
+    let newString = '';
+    for (let i = 0; i < len; i++) {
+      newString += String.fromCharCode(bytes[i]);
+    }
+    const base64 = btoa(newString);
+    const url = `data:${file.type};base64,${base64}`;
     return {
       success: 1,
       file: {
         url,
       },
     };
-  };
+  };;
 
   const initEditor = async () => {
     try {
@@ -91,7 +96,7 @@ function Editor({
       setEditorjs(editor);
     } catch (err) {
       console.error(err);
-      toast.error('Error initializing editor');
+      //toast.error('Error initializing editor');
     }
   };
 

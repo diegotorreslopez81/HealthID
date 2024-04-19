@@ -18,14 +18,14 @@ import Header from "./Components/Header";
 import BackupQuestions from './Components/BackupQuestions';
 import SwUpdater from "./SwUpdater";
 import Spinner from "./Components/Loaded/Spinner";
-import Article from "./Components/Article";
+import Reports from "./Components/Reports";
 import {
   NOT_DISPAY_HEADER_IN,
   LS_USER_KEY,
   LS_DID_KEY,
   initialState,
 } from "./Const";
-import { updateCredential, getPendingResponses } from './services/SocketUtils';
+import { updateCredential, getPendingResponses, getPendingRecords } from './services/SocketUtils';
 import { ContextProvider } from "./AppContext";
 import "./App.css";
 
@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ReactLazyPreload = (importStatement: any) => {
-  
+
   const Component = lazy(importStatement);
   return {
     Component,
@@ -73,73 +73,76 @@ const ReactLazyPreload = (importStatement: any) => {
 
 const EditField = ReactLazyPreload(() =>
   import("./Components/Indentity/Edit/EditField")
-  );
-  const DemoEmail = ReactLazyPreload(() =>
+);
+const DemoEmail = ReactLazyPreload(() =>
   import("./Components/Documents/Demo/DemoEmail")
-  );
-  const DemoPostal = ReactLazyPreload(() =>
+);
+const DemoPostal = ReactLazyPreload(() =>
   import("./Components/Documents/Demo/DemoPostal")
-  );
-  const DemoDateBirth = ReactLazyPreload(() =>
+);
+const DemoDateBirth = ReactLazyPreload(() =>
   import("./Components/Documents/Demo/DemoDateBirth")
-  );
-  const DemoDinamycs = ReactLazyPreload(() =>
+);
+const DemoDinamycs = ReactLazyPreload(() =>
   import("./Components/Documents/Demo/DemoDinamycs")
-  );
-  const EditAdd = ReactLazyPreload(() =>
+);
+const EditAdd = ReactLazyPreload(() =>
   import("./Components/Indentity/Edit/Add")
-  );
-  const Identity = ReactLazyPreload(() =>
+);
+const Identity = ReactLazyPreload(() =>
   import("./Components/Indentity/Indentity")
-  );
-  const Documents = ReactLazyPreload(() => import("./Components/Documents"));
-  const Settings = ReactLazyPreload(() =>
+);
+const Documents = ReactLazyPreload(() => import("./Components/Documents"));
+const Settings = ReactLazyPreload(() =>
   import("./Components/Settings/Settings")
-  );
-  const ImportBackup = ReactLazyPreload(() =>
+);
+const ImportBackup = ReactLazyPreload(() =>
   import("./Components/Settings/ImportBackup")
-  );
-  const Scan = ReactLazyPreload(() => import("./Components/Scan"));
-  const DemoMobile = ReactLazyPreload(() =>
+);
+const Scan = ReactLazyPreload(() => import("./Components/Scan"));
+const DemoMobile = ReactLazyPreload(() =>
   import("./Components/Documents/Demo/DemoMobile")
-  );
-  const EditName = ReactLazyPreload(() =>
+);
+const EditName = ReactLazyPreload(() =>
   import("./Components/Indentity/Edit/EditName")
 );
 const EditEmail = ReactLazyPreload(() =>
-import("./Components/Indentity/Edit/EditEmail")
+  import("./Components/Indentity/Edit/EditEmail")
 );
 const EditMobile = ReactLazyPreload(() =>
-import("./Components/Indentity/Edit/EditMobile")
+  import("./Components/Indentity/Edit/EditMobile")
 );
 const EditPostal = ReactLazyPreload(() =>
-import("./Components/Indentity/Edit/EditPostal")
+  import("./Components/Indentity/Edit/EditPostal")
 );
 const EditDateBirth = ReactLazyPreload(() =>
-import("./Components/Indentity/Edit/EditDateBirth")
+  import("./Components/Indentity/Edit/EditDateBirth")
+);
+const EditDemo = ReactLazyPreload(() =>
+  import("./Components/Indentity/Edit/EditDemo")
 );
 
 function useOnlineStatus() {
   const [online, setOnline] = useState(window.navigator.onLine);
-  
+
   useEffect(() => {
     function handleOnline() {
       setOnline(true);
     }
-    
+
     function handleOffline() {
       setOnline(false);
     }
-    
+
     window.addEventListener("online", handleOnline);
     window.addEventListener("offline", handleOffline);
-    
+
     return () => {
       window.removeEventListener("online", handleOnline);
       window.removeEventListener("offline", handleOffline);
     };
   }, []);
-  
+
   return online;
 }
 
@@ -162,37 +165,37 @@ function App() {
       "serviceEndpoint": "https://gitlab.com/infinite-labs"
     }
   ]
-  const didHandler  = didMethod.driver({method:'healthid',service:svc})
-  
-  
+  const didHandler = didMethod.driver({ method: 'healthid', service: svc })
+
+
   useEffect(() => {
-    history.listen((location: any, action: any) => {
+    history.listen(() => {
       // check for sw updates on page change
       navigator.serviceWorker
-      .getRegistrations()
-      .then((regs) => regs.forEach((reg) => reg.update()));
+        .getRegistrations()
+        .then((regs) => regs.forEach((reg) => reg.update()));
     });
   }, [history]);
-  
+
   const handleUpdateServiceWorker = () => {
     navigator.serviceWorker.getRegistrations().then((regs) =>
       regs.forEach((reg) => {
         reg!.waiting!.postMessage({ type: "SKIP_WAITING" });
       })
-      );
-    };
-    
-    useEffect(() => {
-      if (online === false) {
-        toast.error("No internet connection", {
-          duration: 6000,
-        });
-        toast("Refresh the browser when the connection returns", {
-          duration: 6000,
-        });
-      }
-    }, [online]);
-    
+    );
+  };
+
+  useEffect(() => {
+    if (online === false) {
+      toast.error("No internet connection", {
+        duration: 6000,
+      });
+      toast("Refresh the browser when the connection returns", {
+        duration: 6000,
+      });
+    }
+  }, [online]);
+
   useEffect(() => {
     const userId = localStorage.getItem(LS_DID_KEY);
     if (!userId) {
@@ -228,7 +231,7 @@ function App() {
       if (!userId) {
         return
       }
-      credentialSocketRef.current!.emit('subscribeToCredentialRequestStatus',{userId});
+      credentialSocketRef.current!.emit('subscribeToCredentialRequestStatus', { userId });
       credentialSocketRef.current!.on("updateCredentialStatus", async (data) => {
         console.log("updateCredential event")
         await updateCredential(data, credentialSocketRef as MutableRefObject<Socket<DefaultEventsMap, DefaultEventsMap>>, dispatch)
@@ -251,11 +254,22 @@ function App() {
       return
     }
     console.log('getPendingResponses useEffect')
-    const f = async () =>{
+    const f = async () => {
       await getPendingResponses(userId as string, credentialSocketRef as MutableRefObject<Socket<DefaultEventsMap, DefaultEventsMap>>, dispatch)
     }
     f();
 
+  }, []);
+
+  useEffect(() => {
+    let userId = localStorage.getItem(LS_DID_KEY);
+    if (!userId) {
+      return
+    }
+    const f = async () => {
+      await getPendingRecords(userId as string, dispatch)
+    }
+    f();
   }, []);
 
   return (
@@ -303,6 +317,12 @@ function App() {
             </Suspense>
           </Route>
 
+          <Route exact path="/identity/edit/demo">
+            <Suspense fallback={<Spinner />}>
+              <EditDemo.Component />
+            </Suspense>
+          </Route>
+
           <Route exact path="/identity/edit/mobile">
             <Suspense fallback={<Spinner />}>
               <EditMobile.Component />
@@ -339,9 +359,9 @@ function App() {
             </Suspense>
           </Route>
 
-          <Route exact path="/articles">
+          <Route exact path="/reports">
             <Suspense fallback={<Spinner />}>
-              <Article />
+              <Reports />
             </Suspense>
           </Route>
 
@@ -396,7 +416,7 @@ function App() {
       </Switch>
       <PWAPrompt />
       {!NOT_DISPAY_HEADER_IN.includes(location.pathname) && <Header />}
-      <BackupQuestions/>
+      <BackupQuestions />
     </div>
   );
 }

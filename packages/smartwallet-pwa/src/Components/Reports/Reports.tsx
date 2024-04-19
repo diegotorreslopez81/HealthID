@@ -1,45 +1,26 @@
 import { useSelector } from "react-redux";
 import { Grid, Typography, Avatar } from "@material-ui/core";
 import toast from 'react-hot-toast';
-import apiService from "../../services/apiService";
 import { useStyles } from "./styled";
 import IconDocuments from "../../Assets/svg/IconDocuments";
-import { LS_DID_KEY } from "../../Const";
 
-const Article = () => {
+const Reports = () => {
   const classes: any = useStyles();
-  const articles = useSelector((state: any) => state.store.articles);
+  const reports = useSelector((state: any) => state.store.reports);
 
-  const handleClick = async (url: string) => {
-    const userId = localStorage.getItem(LS_DID_KEY);
-    const response = await apiService.post("user/token", { userId });
-    const token = response?.data.token;
-    console.log(token);
-
-    if (!token) {
-      console.log(response);
-      toast.error("Error retrieving token", {
-        duration: 3000,
-      });
-      return;
-    }
-
-    if (!url.endsWith("/")) {
-      return window.open(`${url}/?token=${encodeURIComponent(token)}`);
-    }
-    return window.open(`${url}?token=${encodeURIComponent(token)}`);
+  const handleClick = async () => {
   };
 
-  return !!articles.length ? (
+  return !!reports?.length ? (
     <>
-      <div className={classes.titleHistory}>Articles</div>
-      {articles.map((art: any, index: number) => (
+      <div className={classes.titleHistory}>Reports</div>
+      {reports.map((report: any) => (
         <Grid
           container
           className={classes.root}
           justifyContent="center"
-          key={art.url}
-          onClick={() => handleClick(art.url)}
+          key={report.url}
+          onClick={() => handleClick()}
           component="div"
         >
           <Grid
@@ -53,10 +34,10 @@ const Article = () => {
             alignItems="center"
           >
             <Grid item xs={2} sm={1}>
-              {!!art?.img ? (
+              {!!report?.img ? (
                 <Avatar
                   variant="square"
-                  src={art.img}
+                  src={report.img}
                   className={classes.cardImage}
                 />
               ) : (
@@ -71,7 +52,7 @@ const Article = () => {
             </Grid>
             <Grid container justifyContent="flex-start" item xs={9}>
               <Typography className={classes.previewtitle} variant="h5">
-                {art.title}
+                Report created by {report.issuer_did}
               </Typography>
             </Grid>
           </Grid>
@@ -95,8 +76,8 @@ const Article = () => {
         fontWeight: 500,
       }}
     >
-      There are no articles yet
+      There are no medical reports yet
     </div>
   );
 };
-export default Article;
+export default Reports;

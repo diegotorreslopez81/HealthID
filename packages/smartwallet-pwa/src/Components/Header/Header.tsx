@@ -98,9 +98,9 @@ export default function Header() {
             <Tab
               classes={{ selected: classes.tabSelect }}
               component={Link}
-              to="/articles"
+              to="/reports"
               icon={<IconDocuments />}
-              label={<span className={classes.tabLabel}>Articles</span>}
+              label={<span className={classes.tabLabel}>Reports</span>}
             />
             <Tab
               classes={{ selected: classes.tabSelect }}

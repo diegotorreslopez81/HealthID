@@ -94,17 +94,13 @@ const ScanHandler = ({ socket, display }: any) => {
   useEffect(() => {
     const handshake = (data: any) => {
       console.log(data)
-      toast("stablishing secure channel");
-      //check zkp
-      //handle case that zkp is valid
-      if (true) {
-        // add documents or other data to this object
-        socket?.current?.emit("finishHandshake", { ...QrResponse, documents: "imagine this is a record" });
-      }
-      //handle case that zkp is invalid
+      toast("Successful connected");
+      setHideQrReader(false);
+      setLoader(false);
+      history.push("/reports");
     };
     if (QrResponse) {
-      if(!!socket?.current){ 
+      if (!!socket?.current) {
         socket.current.on(
           "endHandshake",
           handshake
@@ -112,7 +108,6 @@ const ScanHandler = ({ socket, display }: any) => {
       }
 
     }
-
 
     return () => {
       socket?.current?.off(
@@ -125,7 +120,7 @@ const ScanHandler = ({ socket, display }: any) => {
   const getContentInfo = (qrdata: any) => {
     setQrResponse(qrdata);
     const userId = localStorage.getItem(LS_DID_KEY);
-    const data = {...qrdata, userId, idUser: socket.current.id, message: "hello, I'm a debuging message" };
+    const data = { ...qrdata, userId, idUser: socket.current.id, message: "hello, I'm a debuging message" };
     console.log(data);
     socket.current.emit("initHandshake", data);
     toast("fetching info about the content", {
@@ -143,15 +138,15 @@ const ScanHandler = ({ socket, display }: any) => {
         />
       )}
 
-      {loader && <Spinner/> }
+      {loader && <Spinner />}
 
       {
         QrScan && !isPurchased && !loader &&
-          {
-            request_credential: (
-              <ScanShare QrResponse={QrResponse} socket={socket} />
-            ),
-          }[QrType]
+        {
+          request_credential: (
+            <ScanShare QrResponse={QrResponse} socket={socket} />
+          ),
+        }[QrType]
       }
     </>
   );

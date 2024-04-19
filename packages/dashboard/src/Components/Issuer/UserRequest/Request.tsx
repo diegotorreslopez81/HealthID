@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { 
+import {
 	Grid,
 	Typography,
 	Button,
@@ -18,12 +18,12 @@ import { CREDENTIAL_SUPPORT_ZKP } from "../../../Constants";
 import ArrowLeft from "../../../Assets/svg/ArrowLeft";
 
 const useStyles = makeStyles(() => ({
-  media: {
-    width: '100%',
-  },
+	media: {
+		width: '100%',
+	},
 }));
 
-const Request = ({match, history}: any) => {
+const Request = ({ match, history }: any) => {
 
 	const [request, setRequest] = useState<any>("");
 	const { socket } = useContext(AppContext);
@@ -31,13 +31,13 @@ const Request = ({match, history}: any) => {
 
 	const update = async () => {
 		const id = match.params.id
-		if(!id){
+		if (!id) {
 			return setRequest(null);
 		}
-		try{
+		try {
 			const response = await apiService.get(`/issuer/unique-request?id=${id}`)
 			setRequest(response.data)
-		}catch(err){
+		} catch (err) {
 			console.log(err)
 			toast.error(
 				"Error fetching updated data",
@@ -48,50 +48,50 @@ const Request = ({match, history}: any) => {
 
 	useEffect(() => {
 		update()
-	},[]);
+	}, []);
 
 	const approve = async () => {
 		toast("Approving, please wait");
 		let signedCredentials = {};
 		let w3cCredential: any = {};
 
-		try{
-			w3cCredential = await apiService.post('/issuer/w3c-sign',{requestId:request._id});
+		try {
+			w3cCredential = await apiService.post('/issuer/w3c-sign', { requestId: request._id });
 			signedCredentials = w3cCredential.data;
-			
-			console.log('w3c result',w3cCredential.data);
-			
-			if(CREDENTIAL_SUPPORT_ZKP.includes(request.credential)){
-				const zkpCredential = await apiService.post('/issuer/zkp-sign',{requestId:request._id});
-				
-				console.log('zkp result',zkpCredential.data);
-				
-				signedCredentials = {...signedCredentials,zkp:{...zkpCredential.data.userData}}
+
+			console.log('w3c result', w3cCredential.data);
+
+			if (CREDENTIAL_SUPPORT_ZKP.includes(request.credential)) {
+				const zkpCredential = await apiService.post('/issuer/zkp-sign', { requestId: request._id });
+
+				console.log('zkp result', zkpCredential.data);
+
+				signedCredentials = { ...signedCredentials, zkp: { ...zkpCredential.data.userData } }
 			}
-	
+
 			console.log('signedCredentials', signedCredentials)
-		}catch(err){
+		} catch (err) {
 			console.log(err)
 			let message = 'Error signing credentials';
 			return toast.error(message);
 		}
-		
-		try{
-			
-			const result = await apiService.post('/issuer/approve-credential',{
+
+		try {
+
+			const result = await apiService.post('/issuer/approve-credential', {
 				_id: request._id,
 				signedCredentials
 			})
-			
+
 			toast.success("Credential successfully approved");
 			socket!.current!.emit('changedCredentialRequestStatus', result.data.request);
 			update()
-		
-		}catch(err: any){
+
+		} catch (err: any) {
 			console.log(err)
 			update()
 			let message = 'Error updating credential request status';
-			if(err.message.endsWith("400")){
+			if (err.message.endsWith("400")) {
 				message = "This credential request already has been approved or declined"
 			}
 			toast.error(message);
@@ -99,16 +99,16 @@ const Request = ({match, history}: any) => {
 	}
 
 	const decline = async () => {
-		try{
-			const result = await apiService.post('/issuer/decline-credential',{_id: request._id})
+		try {
+			const result = await apiService.post('/issuer/decline-credential', { _id: request._id })
 			socket!.current!.emit('changedCredentialRequestStatus', result.data.request);
 			toast.success("Credential successfully declined");
 			update()
-		}catch(err: any){
+		} catch (err: any) {
 			console.log(err.message)
-			update() 
+			update()
 			let message = 'Error updating credential request status';
-			if(err.message.endsWith("400")){
+			if (err.message.endsWith("400")) {
 				message = "This credential request already has been approved or declined"
 			}
 			toast.error(message);
@@ -122,73 +122,73 @@ const Request = ({match, history}: any) => {
 	return (
 		<Grid container justify-content='center' item xs={12}>
 			<Grid container justify-content='flex-start' item xs={12}>
-				<IconButton 
+				<IconButton
 					aria-label="return"
 					component="span"
 					onClick={handleReturn}
 				>
-					<ArrowLeft/> return	
+					<ArrowLeft /> return
 				</IconButton>
 			</Grid>
 			<Grid container justify-content='center' item xs={12} sm={8}>
 				{
-					request == null? 
+					request == null ?
 						<Grid item xs={12}>
 							<Typography variant='h5'>
 								This credential request does not exist
 							</Typography>
 						</Grid>
-					: !request?
-						<Grid item xs={12}>
-							<Typography variant='h6'>
-								...Loading
-							</Typography>
-						</Grid>
-					:(
-						<Card>
-							<CardMedia>
-								<ImageWithLoading
-									src={request.data} 
-									alt="document"
-									className={classes.media}
-								/>
-							</CardMedia>
-							<CardContent>
-								<Typography align='center' gutterBottom variant="h5" component="h2">
-									Certificate {request.credential.replace("credential_","")}
+						: !request ?
+							<Grid item xs={12}>
+								<Typography variant='h6'>
+									...Loading
 								</Typography>
-								<Typography align='center' variant="h6" component="p">
-									claim: {request.claim}
-								</Typography>
-								<Typography align='center' variant="h6" component="p">
-									status: {request.status}
-								</Typography>
-							</CardContent>
-							{
-								request.status == "pending" &&
-								<CardActions>
-									<Grid container justify-content="center">
-										<Button 
-											variant='contained' 
-											color='primary'
-											onClick={decline}
-										>
-											decline
-										</Button>
-									</Grid>
-									<Grid container justify-content="center" >
-										<Button 
-											variant='contained' 
-											color='primary'
-											onClick={approve}
-										>
-											approve
-										</Button>
-									</Grid>
-								</CardActions>
-							}
-						</Card>
-					)
+							</Grid>
+							: (
+								<Card>
+									<CardMedia>
+										<ImageWithLoading
+											src={request.data}
+											alt="document"
+											className={classes.media}
+										/>
+									</CardMedia>
+									<CardContent>
+										<Typography align='center' gutterBottom variant="h5" component="h2">
+											Certificate {request.credential.replace("credential_", "")}
+										</Typography>
+										<Typography align='center' variant="h6" component="p">
+											claim: {request.claim}
+										</Typography>
+										<Typography align='center' variant="h6" component="p">
+											status: {request.status}
+										</Typography>
+									</CardContent>
+									{
+										request.status == "pending" &&
+										<CardActions>
+											<Grid container justify-content="center">
+												<Button
+													variant='contained'
+													color='primary'
+													onClick={decline}
+												>
+													decline
+												</Button>
+											</Grid>
+											<Grid container justify-content="center" >
+												<Button
+													variant='contained'
+													color='primary'
+													onClick={approve}
+												>
+													approve
+												</Button>
+											</Grid>
+										</CardActions>
+									}
+								</Card>
+							)
 				}
 			</Grid>
 		</Grid>

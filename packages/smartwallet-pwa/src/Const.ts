@@ -35,18 +35,18 @@ export const credential_birthday = "credential_birthday";
 export const CREDENTIAL_SUPPORT_ZKP = [
   credential_birthday,
   credential_address
-]; 
+];
 
 export const initialState = {
-  name: { id: "name", value: "", status: false, pending:false, },
-  lastName: { id: "lastName", value: "", status: false, pending:false, },
-  [credential_email]: { id: credential_email, value: "", status: false, pending:false, },
-  [credential_mobil]: { id: credential_mobil, value: "", status: false, pending:false, },
+  name: { id: "name", value: "", status: false, pending: false, },
+  lastName: { id: "lastName", value: "", status: false, pending: false, },
+  [credential_email]: { id: credential_email, value: "", status: false, pending: false, },
+  [credential_mobil]: { id: credential_mobil, value: "", status: false, pending: false, },
   [credential_birthday]: {
     id: credential_birthday,
     value: "",
     status: false,
-    pending:false,
+    pending: false,
   },
   [credential_address]: {
     id: credential_address,
@@ -58,10 +58,11 @@ export const initialState = {
       country: "",
     },
     status: false,
-    pending:false,
+    pending: false,
   },
   dynamicFields: [],
   articles: [],
+  records: [],
 };
 
 const MB_IN_BYTES = 1048576//1.548.576

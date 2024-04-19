@@ -19,13 +19,13 @@ import {
   credential_birthday,
   LS_DID_KEY,
   BYTES_TO_MB,
-  MAX_IMAGE_SIZE
+  MAX_IMAGE_SIZE,
 } from "../../Const";
 
 const Identity = () => {
   const classes: any = useStyles();
   const dispatchUserData = useDispatch();
-  const [file,setFile] = useState(null);
+  const [_, setFile] = useState(null);
   const name = useSelector((state: any) => state.store.name.value);
   const lastName = useSelector((state: any) => state.store.lastName.value);
   const dinamycFields = useSelector((state: any) => state.store.dynamicFields);
@@ -44,31 +44,31 @@ const Identity = () => {
     }
 
     console.log("image size", BYTES_TO_MB(file.size) + "mb")
-    console.log("max image size", BYTES_TO_MB(MAX_IMAGE_SIZE) - 1 +"mb")
+    console.log("max image size", BYTES_TO_MB(MAX_IMAGE_SIZE) - 1 + "mb")
 
 
-    if(file.size > MAX_IMAGE_SIZE){
-      return toast.error(`The image should not be bigger than ${BYTES_TO_MB(MAX_IMAGE_SIZE)-1} mb`)
+    if (file.size > MAX_IMAGE_SIZE) {
+      return toast.error(`The image should not be bigger than ${BYTES_TO_MB(MAX_IMAGE_SIZE) - 1} mb`)
     }
 
     const formData = new FormData();
-      
+
     try {
       formData.append("image", file);
-      console.log('formData',formData.getAll("image"));
+      console.log('formData', formData.getAll("image"));
 
       const url = `/user/upload-image?userId=${userId}&credential_type=${credential_address}`
-      const image = await apiService.post(url , formData, {
+      const image = await apiService.post(url, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
 
-      console.log('image',image)
+      console.log('image', image)
 
       await createRequestToIssuer(credential_address, userId as string, image.data.image, postal.country);
 
-    } catch(err) {
+    } catch (err) {
       console.log(err)
       return toast.error("Some error has occurred, please check your internet connection")
     }
@@ -105,7 +105,7 @@ const Identity = () => {
     const _file = event.target.files[0];
     console.log(event.target.files)
     console.log(_file)
-    if(!_file){
+    if (!_file) {
       return toast.error("You need to upload a document to verify the information!");
     }
     setFile(_file);
@@ -198,7 +198,7 @@ const Identity = () => {
                     <div className={classes.check}>
                       <Check />
                     </div>
-                  ): (
+                  ) : (
                     <LoadingButton
                       loading={loading}
                       done={finished}
