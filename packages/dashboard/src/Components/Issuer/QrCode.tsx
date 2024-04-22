@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useContext } from "react";
-import { Button, Grid, makeStyles } from "@material-ui/core";
+import { Button, Grid, Typography, makeStyles } from "@material-ui/core";
 import QRCodeStyling, { Options } from "qr-code-styling";
 import SectionTitle from "../SectionTitle";
 import AppContext from "../../AppContext";
@@ -11,6 +11,13 @@ const useStyles = makeStyles(() => ({
   marginBottom: {
     marginBottom: 20,
   },
+  bold: {
+    marginBottom: 20,
+    fontWeight: 700,
+  },
+  name: {
+    fontWeight: 500,
+  }
 }));
 
 const QrCode = () => {
@@ -133,6 +140,11 @@ const QrCode = () => {
       {Boolean(socketResponse!.idProvider) && (
         <>
           <SectionTitle title="Medical Report" />
+          {!!socketResponse!.name && (
+            <Typography variant="h6">
+              Pacient Name: {socketResponse!.name} {socketResponse!.lastName}
+            </Typography>
+          )}
           <Grid container spacing={3} className={classes.marginBottom}>
             <div style={{ width: "100%" }} >
               <Editor

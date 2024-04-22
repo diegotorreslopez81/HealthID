@@ -68,3 +68,8 @@ export const initialState = {
 const MB_IN_BYTES = 1048576//1.548.576
 export const BYTES_TO_MB = (bytes: number) => (bytes / MB_IN_BYTES);
 export const MAX_IMAGE_SIZE = 21 * MB_IN_BYTES;
+
+export const truncate = (str: string, n: number) => {
+  const offset = 11;
+  return str.length > n ? str.substring(offset, offset + n - 1) + "..." : str;
+};

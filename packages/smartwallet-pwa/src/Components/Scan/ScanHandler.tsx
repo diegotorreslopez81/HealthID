@@ -5,6 +5,7 @@ import { LS_USER_KEY, LS_DID_KEY } from "../../Const";
 import ReadQrCode from "../ReadQrCode";
 import ScanShare from "../ReadQrCode/ScanShare";
 import Spinner from '../Loaded/Spinner';
+import { useSelector } from "react-redux";
 
 const ScanHandler = ({ socket, display }: any) => {
   const [QrScan, setQrScan] = useState(false);
@@ -13,6 +14,10 @@ const ScanHandler = ({ socket, display }: any) => {
   const [isPurchased, setIsPurchased] = useState(false);
   const [QrType, setQrType] = useState("");
   const [loader, setLoader] = useState(false);
+  const nameValue = useSelector((state: any) => state.store.name.value);
+  const lastNameValue = useSelector(
+    (state: any) => state.store.lastName.value
+  );
   const history = useHistory();
 
   useEffect(() => {
@@ -120,7 +125,7 @@ const ScanHandler = ({ socket, display }: any) => {
   const getContentInfo = (qrdata: any) => {
     setQrResponse(qrdata);
     const userId = localStorage.getItem(LS_DID_KEY);
-    const data = { ...qrdata, userId, idUser: socket.current.id, message: "hello, I'm a debuging message" };
+    const data = { ...qrdata, userId, idUser: socket.current.id, name: nameValue || "", lastName: lastNameValue || "" };
     console.log(data);
     socket.current.emit("initHandshake", data);
     toast("fetching info about the content", {
