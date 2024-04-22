@@ -271,6 +271,8 @@ router.post("/report", async (req: Request, res: Response) => {
     const id = res.locals.userId;
 
     const issuer = await IssuerModel.findOne({ id });
+    console.log("issuer", issuer);
+    console.log("id", id);
     const did = issuer.did;
 
     const credential_did = (await didHandler.generate()).id;
@@ -290,13 +292,13 @@ router.post("/report", async (req: Request, res: Response) => {
           "https://www.w3.org/2018/credentials/v1",
           "https://www.w3.org/2018/credentials/examples/v1",
         ],
-        id: `${process.env.API_URL_CREDENTIAL}/credentials/1`,
+        id: `${process.env.API_URL_CREDENTIAL}credentials/1`,
         type: ["VerifiableCredential"],
         issuer: "https://moncon.co/",
         issuanceDate: DateTime.now().toString(),
         credentialSubject,
       },
-      PublicKeyUrl: `${process.env.API_URL_CREDENTIAL}/public_key?did=${did}`
+      PublicKeyUrl: `${process.env.API_URL_CREDENTIAL}public_key?did=${did}`
     };
 
     const w3cKeyPair = {
