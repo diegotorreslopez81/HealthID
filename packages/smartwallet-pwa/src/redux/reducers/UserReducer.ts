@@ -102,12 +102,14 @@ const UserReducer = createSlice({
       const oldReportsId = new Set();
       const newReports: any[] = [];
 
-      state.reports.forEach((report: any) => {
-        if (!oldReportsId.has(report._id)) {
-          oldReportsId.add(report._id);
-          newReports.push(report);
-        }
-      });
+      if (state?.reports?.length) {
+        state.reports?.forEach((report: any) => {
+          if (!oldReportsId.has(report._id)) {
+            oldReportsId.add(report._id);
+            newReports.push(report);
+          }
+        });
+      }
 
       action.payload.forEach((report: any) => {
         if (!oldReportsId.has(report._id)) {

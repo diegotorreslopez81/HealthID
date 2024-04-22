@@ -270,7 +270,7 @@ router.post("/report", async (req: Request, res: Response) => {
   try {
     const id = res.locals.userId;
 
-    const issuer = await IssuerModel.findOne({ id })
+    const issuer = await IssuerModel.findOne({ id });
     const did = issuer.did;
 
     const credential_did = (await didHandler.generate()).id;
