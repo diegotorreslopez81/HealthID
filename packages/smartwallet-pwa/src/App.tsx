@@ -118,9 +118,6 @@ const EditPostal = ReactLazyPreload(() =>
 const EditDateBirth = ReactLazyPreload(() =>
   import("./Components/Indentity/Edit/EditDateBirth")
 );
-const EditDemo = ReactLazyPreload(() =>
-  import("./Components/Indentity/Edit/EditDemo")
-);
 
 function useOnlineStatus() {
   const [online, setOnline] = useState(window.navigator.onLine);
@@ -314,12 +311,6 @@ function App() {
           <Route exact path="/identity/edit/email">
             <Suspense fallback={<Spinner />}>
               <EditEmail.Component />
-            </Suspense>
-          </Route>
-
-          <Route exact path="/identity/edit/demo">
-            <Suspense fallback={<Spinner />}>
-              <EditDemo.Component />
             </Suspense>
           </Route>
 
