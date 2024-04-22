@@ -118,6 +118,12 @@ const EditPostal = ReactLazyPreload(() =>
 const EditDateBirth = ReactLazyPreload(() =>
   import("./Components/Indentity/Edit/EditDateBirth")
 );
+const DisplayReport = ReactLazyPreload(() =>
+  import("./Components/Reports/DisplayReport")
+);
+const DisplayCredential = ReactLazyPreload(() =>
+  import("./Components/Reports/DisplayCredentials")
+);
 
 function useOnlineStatus() {
   const [online, setOnline] = useState(window.navigator.onLine);
@@ -401,6 +407,17 @@ function App() {
           <Route exact path="/documents/demo/postal">
             <Suspense fallback={<Spinner />}>
               <DemoPostal.Component />
+            </Suspense>
+          </Route>
+
+          <Route exact path="/report/:credentialId">
+            <Suspense fallback={<Spinner />}>
+              <DisplayReport.Component />
+            </Suspense>
+          </Route>
+          <Route exact path="/report/credential/:credentialId">
+            <Suspense fallback={<Spinner />}>
+              <DisplayCredential.Component />
             </Suspense>
           </Route>
         </ContextProvider>

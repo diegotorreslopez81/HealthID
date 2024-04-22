@@ -1,14 +1,21 @@
 import { useSelector } from "react-redux";
-import { Grid, Typography, Avatar } from "@material-ui/core";
+import { Grid, Typography, Avatar, Button } from "@material-ui/core";
 import toast from 'react-hot-toast';
 import { useStyles } from "./styled";
 import IconDocuments from "../../Assets/svg/IconDocuments";
+import { truncate } from "../../Const";
+import { useHistory } from "react-router-dom";
 
 const Reports = () => {
   const classes: any = useStyles();
   const reports = useSelector((state: any) => state.store.reports);
+  const history = useHistory();
 
-  const handleClick = async () => {
+  const openReport = async (report: any) => {
+    history.push(`/report/${report?.credential?.credentialSubject?.credential?.id}`);
+  };
+  const openCredential = async (report: any) => {
+    history.push(`/report/credential/${report?.credential?.credentialSubject?.credential?.id}`);
   };
 
   return !!reports?.length ? (
@@ -19,8 +26,7 @@ const Reports = () => {
           container
           className={classes.root}
           justifyContent="center"
-          key={report.url}
-          onClick={() => handleClick()}
+          key={report?.credential?.credentialSubject?.credential?.id}
           component="div"
         >
           <Grid
@@ -50,10 +56,24 @@ const Reports = () => {
                 </div>
               )}
             </Grid>
-            <Grid container justifyContent="flex-start" item xs={9}>
+            <Grid container justifyContent="flex-start" item xs={5}>
               <Typography className={classes.previewtitle} variant="h5">
-                Report created by {report.issuer_did}
+                Report created by {truncate(report.issuer_did, 10)}
               </Typography>
+            </Grid>
+            <Grid container justifyContent="flex-end" item xs={5}>
+              <Button
+                className={classes.historyLink}
+                onClick={() => openCredential(report)}
+              >
+                open credential
+              </Button>
+              <Button
+                className={classes.historyLink}
+                onClick={() => openReport(report)}
+              >
+                open report
+              </Button>
             </Grid>
           </Grid>
         </Grid>

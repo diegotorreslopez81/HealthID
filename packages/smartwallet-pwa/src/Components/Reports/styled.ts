@@ -152,4 +152,13 @@ export const useStyles = makeStyles((theme) => ({
       marginRight: theme.spacing(0.5),
     },
   },
+  return: {
+    color: "#ffff",
+    display: "flex",
+    textAlign: "left",
+    marginTop: "15px",
+    cursor: "pointer",
+    marginLeft: "15px",
+    fontSize: "1.6rem",
+  },
 }));
