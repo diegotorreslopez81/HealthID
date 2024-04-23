@@ -11,7 +11,7 @@ import Link from "../Link";
 import IconWeb from "../../Assets/svg/IconWeb";
 import IconSpeaker from "../../Assets/svg/IconSpeaker";
 import apiService from "../../services/apiService";
-import { encrypt, getDataFromLS } from "../../services/backupService" ;
+import { encrypt, getDataFromLS } from "../../services/backupService";
 import { LS_KEY_PAIR, LS_PBKDF_KEY } from "../../Const";
 
 const Settings = () => {
@@ -20,39 +20,39 @@ const Settings = () => {
 
   const generateBackUp = async () => {
     const data = getDataFromLS()
-    
+
     const base64Keypair = localStorage.getItem(LS_KEY_PAIR);
 
     const keypair = JSON.parse(window.atob(base64Keypair as string));
 
-    const encryptedData = await encrypt(data, keypair);
+    const encryptedData = await encrypt(data, keypair.keyring);
 
     const PBKDF = JSON.parse(localStorage.getItem(LS_PBKDF_KEY) as string);
 
     const keypairBlob = new Blob(
       [
-        JSON.stringify(PBKDF,null,4)
+        JSON.stringify(PBKDF, null, 4)
       ],
       {
-        type : 'application/json'
+        type: 'application/json'
       }
     );
-    
+
     try {
-      const response = await apiService.post("/user/update-backup",{
-        public_key: keypair.keypair.public_key,
-        backup: encryptedData,
+      const response = await apiService.post("/user/update-backup", {
+        public_key: keypair.ecdh_public_key,
+        backup: JSON.stringify(encryptedData),
       });
       console.log(response);
-    } catch(err: any) {
+    } catch (err: any) {
       console.log(err);
-      return toast.error("Error creating backup",{
+      return toast.error("Error creating backup", {
         duration: 2000,
       })
     }
-    
-    saveAs(keypairBlob,"moncon_wallet_pbkdf.json");
-    
+
+    saveAs(keypairBlob, "moncon_wallet_pbkdf.json");
+
     return;
   }
 

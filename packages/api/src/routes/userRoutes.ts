@@ -1,6 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
-import { 
+import {
   getSafetyQuestions,
   createPBKDF,
   sanitizeAnswers,
@@ -29,11 +29,11 @@ router.post("/token", async (req, res) => {
 
 router.get('/backup-questions', async (req, res) => {
   try {
-    const questions =  getSafetyQuestions('en_GB');
+    const questions = getSafetyQuestions('en_GB');
     return res.status(200).json(questions);
-  } catch (err){
+  } catch (err) {
     console.log("Error returning backup questions", err);
-    return res.status(500).json({error:"Error returning backup questions"});
+    return res.status(500).json({ error: "Error returning backup questions" });
   }
 });
 
@@ -42,10 +42,10 @@ router.post('/pbkdf', async (req, res) => {
   try {
     const pbkdf = await createPBKDF(userData)
     console.log(pbkdf);
-    return res.status(200).json({pbkdf});
-  } catch (err){
+    return res.status(200).json({ pbkdf });
+  } catch (err) {
     console.log("Error creating pbkdf", err);
-    return res.status(500).json({error:"Error creating pbkdf"});
+    return res.status(500).json({ error: "Error creating pbkdf" });
   }
 });
 
@@ -54,11 +54,11 @@ router.post('/keypair', async (req, res) => {
   console.log(req.body)
   try {
     const sanitizedAnswers = sanitizeAnswers(answers);
-    const keypair = await recoveryKeypair(sanitizedAnswers,pbkdf,"user");
+    const keypair = await recoveryKeypair(sanitizedAnswers, pbkdf, "user");
     return res.status(200).json(keypair["user"]);
-  } catch (err){
+  } catch (err) {
     console.log("Error creating keypair", err);
-    return res.status(500).json({error:"Error creating keypair"});
+    return res.status(500).json({ error: "Error creating keypair" });
   }
 });
 
@@ -66,7 +66,7 @@ router.post('/update-backup', async (req, res) => {
   const { public_key, backup } = req.body;
 
   const result = await BackupModel.findOneAndUpdate(
-    {publicKey: public_key},
+    { publicKey: public_key },
     {
       backup,
       lastUpdated: Date.now()
@@ -74,16 +74,16 @@ router.post('/update-backup', async (req, res) => {
     { upsert: true, new: true }
   );
 
-  res.status(200).json({result});
+  res.status(200).json({ result });
 });
 
 router.post('/get-backup', async (req, res) => {
   const { public_key } = req.body;
 
-  const result = await BackupModel.findOne({publicKey:public_key});
+  const result = await BackupModel.findOne({ publicKey: public_key });
 
 
-  res.status(200).json({result});
+  res.status(200).json({ result });
 });
 
 export default router;

@@ -19,7 +19,7 @@ export const getDataFromLS = () => {
 	"keypair": {
 		"private_key": "yXtHASzOVzwQaKuCpnq20jwwVedBaDNd9h6qEgewhxo=",
 		"public_key": "BAqV0F7EEhddLkATOLR+sXBf6ktmcFEFeqbm1EorhrtTDMr8R8J0dfNmEOYWqaAMh2g4WnHdt7knKEXhIWOb7sE="
-  }
+	}
  */
 
 /** 
@@ -30,17 +30,19 @@ export const getDataFromLS = () => {
  */
 
 export const encrypt = async (message: any, key: keyring): Promise<secret_message> => {
-  const keys = JSON.stringify({ password: key.ecdh });
-  const data = JSON.stringify({ message, header: 'data backup' });
-  const contract = `Scenario 'ecdh': Encrypt a message with a password/secret
+	const keys = JSON.stringify({ password: key.ecdh });
+	const data = JSON.stringify({ message, header: 'data backup' });
+	const contract = `Scenario 'ecdh': Encrypt a message with a password/secret
 		Given that I have a 'string' named 'password' 
 		Given that I have a 'string' named 'header' 
 		Given that I have a 'string' named 'message'
     When I encrypt the secret message 'message' with 'password'
     Then print the 'secret message'`;
-  const { result } = await zencode_exec(contract, { data, keys });
+	console.log("data", data);
+	console.log("keys", keys);
+	const { result } = await zencode_exec(contract, { data, keys });
 	const secret_message: secret_message = JSON.parse(result).secret_message;
-  return secret_message;
+	return secret_message;
 };
 
 /** 
@@ -50,10 +52,10 @@ export const encrypt = async (message: any, key: keyring): Promise<secret_messag
  * @return {Object}
  */
 
-export const decrypt = async (encryptedData: any, key: keyring ): Promise<string> => {
-  const keys = JSON.stringify({ password: key.ecdh });
-  const data = JSON.stringify(encryptedData);
-  const contract = `Scenario 'ecdh': Decrypt the message with the password 
+export const decrypt = async (encryptedData: any, key: keyring): Promise<string> => {
+	const keys = JSON.stringify({ password: key.ecdh });
+	const data = JSON.stringify(encryptedData);
+	const contract = `Scenario 'ecdh': Decrypt the message with the password 
 	Given that I have a valid 'secret message' 
 	Given that I have a 'string' named 'password' 
 	When I decrypt the text of 'secret message' with 'password' 
