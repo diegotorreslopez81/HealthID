@@ -131,7 +131,6 @@ function Editor({
             contentEditable
             id="contenteditable-title"
             style={{ width: "100%" }}
-            placeholder="Write your title"
             onInput={(e) => {
               setTitle(e.currentTarget.textContent);
               setError((err: any) => ({ ...err, title: false }));
