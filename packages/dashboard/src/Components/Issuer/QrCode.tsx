@@ -6,6 +6,7 @@ import AppContext from "../../AppContext";
 import toast from "react-hot-toast";
 import Editor from "../Editor/Editor";
 import apiService from "../../Services/apiService";
+import { Socket } from "socket.io-client";
 
 const useStyles = makeStyles(() => ({
   marginBottom: {
@@ -27,10 +28,8 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const QrCode = () => {
-  const { socket, userId, setIsLoading } = useContext(AppContext);
-  const [socketResponse, setSocketResponse] = useState<any>({});
-  const [options, setOptions] = useState<Options>({
+const createOptions = (socket: React.MutableRefObject<Socket<any, any> | undefined> | undefined): Options => {
+  return {
     width: 300,
     height: 300,
     type: "svg",
@@ -48,7 +47,13 @@ const QrCode = () => {
       crossOrigin: "anonymous",
       margin: 20,
     },
-  })
+  };
+};
+
+const QrCode = () => {
+  const { socket, userId, setIsLoading, isSocketConnected } = useContext(AppContext);
+  const [socketResponse, setSocketResponse] = useState<any>({});
+  const [options, setOptions] = useState<Options>(createOptions(socket));
   const [request, setRequest] = useState<{
     content: { blocks: any[] },
     isSensitiveContent: false,
@@ -131,6 +136,12 @@ const QrCode = () => {
     if (!qrCode) return;
     qrCode.update(options);
   }, [qrCode, options]);
+
+  useEffect(() => {
+    if (!isSocketConnected) {
+      setOptions(createOptions(socket));
+    }
+  }, [isSocketConnected]);
 
   return (
     <>

@@ -38,6 +38,7 @@ function App() {
   const [userRole, setUserRole] = useState("");
   const [userId, setUserId] = useState("");
   const [userPhoto, setUserPhoto] = useState("");
+  const [isSocketConnected, setIsSocketConnected] = useState(false);
   const socket: MutableRefObject<Socket<any, any> | undefined> = useRef();
 
 
@@ -74,14 +75,24 @@ function App() {
   const redirectPath = ROLES_DEFAULT_ROUTES[userRole] || "/auth";
 
   useEffect(() => {
-    socket.current = io(import.meta.env.VITE_MONCON_URL_SOCKET);
-    socket.current.on("connect", () => {
-      console.log(socket.current!.id);
-    });
+    const setSocket = () => {
+      socket.current = io(import.meta.env.VITE_MONCON_URL_SOCKET);
+      socket.current.on("connect", () => {
+        console.log(socket.current!.id);
+        setIsSocketConnected(true);
+      });
+      socket.current.on('connect_error', function() {
+        console.log('Connection Failed');
+        setSocket();
+      });
+    };
+
+    setSocket();
 
     return () => {
       socket.current!.on("disconnect", () => {
         console.log("disconnect");
+        setIsSocketConnected(false);
       });
     };
   }, []);
@@ -98,6 +109,7 @@ function App() {
         setUserRole,
         setIsLoading,
         logout,
+        isSocketConnected,
         socket: socket,
       }}
     >

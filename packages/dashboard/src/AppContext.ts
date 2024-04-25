@@ -9,7 +9,8 @@ interface AppContextI {
   setUserRole: Function,
   setIsLoading: Function,
   logout: Function,
-  socket: MutableRefObject<Socket<any, any> | undefined> | undefined
+  socket: MutableRefObject<Socket<any, any> | undefined> | undefined,
+  isSocketConnected: boolean,
 }
 
 const AppContext = createContext<AppContextI>({
@@ -17,10 +18,11 @@ const AppContext = createContext<AppContextI>({
   userRole: '',
   userId: '',
   userPhoto: '',
-  setUserRole: ()=> {},
-  setIsLoading: ()=> {},
-  logout: ()=> {},
+  setUserRole: () => { },
+  setIsLoading: () => { },
+  logout: () => { },
   socket: undefined,
+  isSocketConnected: false,
 });
 
 export default AppContext;
