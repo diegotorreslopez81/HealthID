@@ -138,7 +138,7 @@ const QrCode = () => {
   }, [qrCode, options]);
 
   useEffect(() => {
-    if (!isSocketConnected) {
+    if (isSocketConnected) {
       setOptions(createOptions(socket));
     }
   }, [isSocketConnected]);
