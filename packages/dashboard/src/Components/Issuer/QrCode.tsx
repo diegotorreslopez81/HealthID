@@ -19,7 +19,10 @@ const useStyles = makeStyles(() => ({
     marginBottom: 20,
     fontWeight: 700,
   },
-  name: {
+  pacientName: {
+    textAlign: "center",
+    alignContent: "center",
+    justifyContent: "center",
     fontWeight: 500,
   }
 }));
@@ -134,7 +137,7 @@ const QrCode = () => {
       {
         !Boolean(socketResponse!.idProvider) && (
           <>
-            <SectionTitle title="Escanee el QR Code"  />
+            <SectionTitle title="Escanee el QR Code" />
             <Grid container spacing={3} className={classes.marginBottom}>
               <div ref={ref}></div>
             </Grid>
@@ -145,7 +148,7 @@ const QrCode = () => {
         <>
           <SectionTitle title="Medical Report" />
           {!!socketResponse!.name && (
-            <Typography variant="h6">
+            <Typography variant="h6" className={classes.pacientName}>
               Pacient Name: {socketResponse!.name} {socketResponse!.lastName}
             </Typography>
           )}
