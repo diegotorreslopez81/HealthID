@@ -1,15 +1,22 @@
 import { makeStyles, createTheme } from "@material-ui/core";
 
 export const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: 20,
-  },
   subTitle: {
+    margin: 'auto',
     padding: "0 20px 20px",
     fontWeight: "bold",
   },
   title: {
     textAlign: "center",
+    padding: "0 20px 20px",
+  },
+  centrado: {
+    margin: 'auto',
+    padding: 0,
+    textAlign: "center",
+    alignContent: "center",
+    marginBottom: 20,
+    justifyContent: "center",
   },
   texField: {
     margin: 20,
@@ -20,11 +27,11 @@ export const useStyles = makeStyles((theme) => ({
     paddingLeft: 85,
   },
   logo: {
-    maxWidth: theme.spacing(14),
+    maxWidth: theme.spacing(50),
     marginBottom: 40,
   },
   claims: {
-    marginBottom: 20,
+    
   },
   paper: {
     width: theme.spacing(40),
@@ -33,6 +40,9 @@ export const useStyles = makeStyles((theme) => ({
   },
   publisherProviderButtons: {
     marginTop: 30,
+    textAlign: "center",
+    alignContent: "center",
+    justifyContent: "center",
   },
   publisherButton: {
     textAlign: "center",
@@ -54,6 +64,11 @@ export const useStyles = makeStyles((theme) => ({
     color: "#a3a9ae",
     marginBottom: 10,
     cursor: "pointer",
+    margin: 'auto',
+    padding: 0,
+    textAlign: "center",
+    alignContent: "center",
+    justifyContent: "center",    
   },
   decoratedText: {
     textDecoration: "line-through",

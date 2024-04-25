@@ -5,10 +5,10 @@ const useStyles = makeStyles(() => ({
     marginBottom: 20,
     fontWeight: 700,
     lineHeight: "43,58px",
-    "@media screen and (max-width: 800px)": {
-      marginTop: "10px",
-      textAlign: "center",
-    },
+    marginTop: "10px",
+    textAlign: "center",
+    alignContent: "center",
+    justifyContent: "center",
   },
 }));
 

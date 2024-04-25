@@ -21,7 +21,7 @@ import ForgotPassword from './ForgotPassword/ForgotPassword';
 import { getAuth } from "firebase/auth";
 import apiService from "../../Services/apiService";
 import AppContext from "../../AppContext";
-import moncon_negro from "../../Assets/Images/moncon_negro.png";
+import HealthIDLogo from "../../Assets/Images/HealthID-horizontal.png";
 import FacebookLogo from "../../Assets/svg/FacebookLogo.js";
 import GoogleLogo from "../../Assets/svg/GoogleLogo.js";
 import { useStyles, publisherTheme } from "./styles";
@@ -164,18 +164,19 @@ const Login = () => {
 
   return (
     <ThemeProvider theme={publisherTheme}>
+      <div style={{  margin: 'auto', width: '60%', padding: 10, }}> 
       <CssBaseline />
-      <Grid container justify-content="center">
-        <Grid container justify-content="center" item xs={12}>
+      <Grid className={classes.centrado}>
+        <Grid >
           <img
-            src={moncon_negro}
+            src={HealthIDLogo}
             alt="logo"
             className={classes.logo}
           />
         </Grid>
       </Grid>
-      <Grid container justify-content='center' className={classes.claims}>
-        <Grid item xs={1}>
+      <Grid container className={classes.centrado}>
+        <Grid item xs={3}>
           <Typography
             onClick={() => {
               setUserType(ROLE_PUBLISHER)
@@ -191,10 +192,10 @@ const Login = () => {
                 classes.clearSwitchPublisherButton
             }
           >
-            For publisher
+            For admins
           </Typography>
         </Grid>
-        <Grid item xs={1}>
+        <Grid item xs={3}>
           <Typography
             onClick={() => {
               setUserType(ROLE_ISSUER)
@@ -215,43 +216,42 @@ const Login = () => {
         </Grid>
       </Grid>
       <ThemeProvider theme={publisherTheme}>
-        <Grid container justify-content="center">
-          <Grid item xs={4}>
+        <Grid container className={classes.centrado}>
+          <Grid >
             <Typography variant="h4" className={classes.title}>
-              The Future of Pay
-              <span className={classes.decoratedText}>walls</span>
+              Electronic Medical Records in Blockchain
             </Typography>
           </Grid>
-          <Grid container item xs={9} justify-content="center" className={classes.root}>
+          <Grid container item xs={12} justify-content="center" className={classes.centrado}>
             <Paper className={classes.paper}>
               {userType === ROLE_PUBLISHER ? !forgotPassword ? (
                 <>
-                  <Grid container justify-content="center">
-                    <Typography variant="subtitle1" className={classes.subTitle}>
-                      {isLogin ? "Login with Email" : "Register as publisher"}
+                  <Grid>
+                    <Typography variant="subtitle1">
+                      {isLogin ? "Login with Email" : "Register as admin"}
                     </Typography>
                   </Grid>
-                  <Grid container justify-content="center">
-                    <Grid item>
+                  <Grid>
+                    <Grid item  >
                       <TextField
                         label="Your email addres"
                         value={email}
                         onChange={(event) => setEmail(event.target.value)}
-                        className={classes.textField}
                       />
                     </Grid>
-                    <Grid container justify-content="center">
+                    <Grid container >
                       <TextField
                         label="Your password"
                         value={password}
                         type="password"
                         onChange={(event) => setPassword(event.target.value)}
-                        className={classes.textField}
+                        className={classes.centrado}
                       />
                     </Grid>
                     {!isLogin && (
-                      <Grid container justify-content="center">
+                      <Grid container >
                         <TextField
+                          className={classes.centrado}
                           label="Repeat your password"
                           value={passwordRepeat}
                           type="password"
@@ -259,7 +259,6 @@ const Login = () => {
                             setPasswordRepeat(event.target.value)
                           }
                           error={password !== passwordRepeat}
-                          className={classes.textField}
                           helperText={
                             password !== passwordRepeat
                               ? "The passwords are diferent"
@@ -268,12 +267,12 @@ const Login = () => {
                         />
                       </Grid>
                     )}
-                    <Grid container item xs={8} justify-content="center">
+                    <Grid container>
                       <FormHelperText error={error?.origin === "email"}>
                         {error?.origin === "email" && error?.message}
                       </FormHelperText>
                     </Grid>
-                    <Grid container justify-content="center">
+                    <Grid container className={classes.centrado}>
                       <Button
                         variant="contained"
                         color="primary"
@@ -284,7 +283,7 @@ const Login = () => {
                       </Button>
                     </Grid>
                     {isLogin && (
-                      <Grid container justify-content="center">
+                      <Grid container style={{  margin: 'auto',  padding: 0, }}>
                         <Typography
                           onClick={() => setForgotPassword(true)}
                           className={classes.labels}
@@ -294,14 +293,14 @@ const Login = () => {
                         </Typography>
                       </Grid>
                     )}
-                    <Grid container justify-content="center">
+                    <Grid container>
                       <Typography
                         className={classes.labels}
                         variant="body2"
                         onClick={handleChangeLoginRegister}
                       >
                         {isLogin
-                          ? "Register as publisher"
+                          ? "Register as admin"
                           : "Login to your account"}
                       </Typography>
                     </Grid>
@@ -310,35 +309,35 @@ const Login = () => {
               ) : <ForgotPassword close={setForgotPassword} />
                 : (
                   <>
-                    <Grid container justify-content="center">
-                      <Typography variant="subtitle1" className={classes.subTitle}>
+                    <Grid container>
+                      <Typography variant="subtitle1" className={classes.centrado}>
                         Login with Email
                       </Typography>
                     </Grid>
-                    <Grid container justify-content="center">
-                      <Grid item>
+                    <Grid container>
+                      <Grid item  className={classes.centrado}>
                         <TextField
                           label="Your email addres"
                           value={email}
                           onChange={(event) => setEmail(event.target.value)}
-                          className={classes.textField}
+                          className={classes.centrado}
                         />
                       </Grid>
-                      <Grid container justify-content="center">
+                      <Grid container>
                         <TextField
                           label="Your password"
                           value={password}
                           type="password"
                           onChange={(event) => setPassword(event.target.value)}
-                          className={classes.textField}
+                          className={classes.centrado}
                         />
                       </Grid>
-                      <Grid container item xs={8} justify-content="center">
+                      <Grid container>
                         <FormHelperText error={error?.origin === "email"}>
                           {error?.origin === "email" && error?.message}
                         </FormHelperText>
                       </Grid>
-                      <Grid container justify-content="center">
+                      <Grid container className={classes.centrado}>
                         <Button
                           variant="contained"
                           color="primary"
@@ -368,23 +367,8 @@ const Login = () => {
                 justify-content="center"
                 className={classes.publisherProviderButtons}
               >
-                <Grid item className={classes.facebookButtonContainer}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleLoginProvider(PROVIDER_FACEBOOK)}
-                    className={classes.facebookButton}
-                  >
-                    <FacebookLogo />
-                    &nbsp; Login with Facebook
-                  </Button>
-                </Grid>
-                <Grid
-                  container
-                  justify-content="center"
-                  className={classes.googleButtonContainer}
-                >
-                  <Button
+                <Grid item className={classes.googleButtonContainer}>
+                <Button
                     variant="contained"
                     color="primary"
                     onClick={() => handleLoginProvider(PROVIDER_GOOGLE)}
@@ -393,6 +377,8 @@ const Login = () => {
                     <GoogleLogo />
                     &nbsp; Login with Google
                   </Button>
+                </Grid>
+                <Grid container>
                   <Grid container item xs={10} justify-content="flex-end">
                     <Grid container item xs={12} justify-content="center">
                       <FormHelperText
@@ -412,6 +398,7 @@ const Login = () => {
           </Grid>
         </Grid>
       </ThemeProvider>
+      </div>
     </ThemeProvider>
   );
 };

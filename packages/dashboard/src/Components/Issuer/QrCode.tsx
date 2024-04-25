@@ -10,6 +10,10 @@ import apiService from "../../Services/apiService";
 const useStyles = makeStyles(() => ({
   marginBottom: {
     marginBottom: 20,
+    margin: 'auto', width: '100%', padding: 10,
+    textAlign: "center",
+    alignContent: "center",
+    justifyContent: "center",
   },
   bold: {
     marginBottom: 20,
@@ -31,7 +35,7 @@ const QrCode = () => {
       idProvider: socket?.current?.id,
     }),
     image:
-      "https://pbs.twimg.com/profile_images/1356260647642796035/qPlwhss9_400x400.jpg",
+      "",
     dotsOptions: { type: "classy", color: "#6a1a4c" },
     cornersSquareOptions: { type: "extra-rounded", color: "#000000" },
     backgroundOptions: {
@@ -130,7 +134,7 @@ const QrCode = () => {
       {
         !Boolean(socketResponse!.idProvider) && (
           <>
-            <SectionTitle title="QrCode" />
+            <SectionTitle title="Escanee el QR Code"  />
             <Grid container spacing={3} className={classes.marginBottom}>
               <div ref={ref}></div>
             </Grid>

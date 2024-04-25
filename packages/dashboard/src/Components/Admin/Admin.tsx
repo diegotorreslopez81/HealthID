@@ -33,7 +33,7 @@ const useStyles: any = makeStyles((theme) =>({
     padding: 20,
   },
   texField: {
-    margin: 20,
+    marginLeft: 20,
   },
   button: {
     margin: 20,
@@ -142,12 +142,12 @@ const Admin = () => {
         <SectionTitle title="Create Issuer Account" />
         <Grid container item xs={9} justify-content="center">
           <Paper className={classes.paper}>
-              <Grid container justify-content="center">
+              <Grid container>
                 <TextField
                   label="Your email addres"
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
-                  className={classes.textField}
+                  className={classes.texField}
                 />
               </Grid>
               <Grid container justify-content="center">
@@ -156,7 +156,7 @@ const Admin = () => {
                   value={password}
                   type="password"
                   onChange={(event) => setPassword(event.target.value)}
-                  className={classes.textField}
+                  className={classes.texField}
                 />
               </Grid>
               <Grid container justify-content="center">

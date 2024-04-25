@@ -9,7 +9,7 @@ import {
   ROLE_PUBLISHER,
   ROLES_DEFAULT_ROUTES,
 } from "../../Constants";
-import moncon_negro from "../../Assets/Images/moncon_negro.png";
+import HealthID_Logo from "../../Assets/Images/HealthID-horizontal.png";
 import { AppBar, Toolbar, useMediaQuery, Button } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import Link from "../Link/Link";
@@ -112,10 +112,10 @@ export default function Header() {
         <Toolbar>
           <div className={classes.menuButton}>
             <img
-              src={moncon_negro}
+              src={HealthID_Logo}
               onClick={goToDashboard}
               className={classes.logo}
-              alt="Moncon logo"
+              alt=" logo"
             />
           </div>
           <Tabs
