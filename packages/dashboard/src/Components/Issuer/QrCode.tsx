@@ -37,7 +37,7 @@ const createOptions = (socket: React.MutableRefObject<Socket<any, any> | undefin
       idProvider: socket?.current?.id,
     }),
     image:
-      "https://pbs.twimg.com/profile_images/1783460335711617024/RIbrVwzf_400x400.jpg",
+      "https://i.postimg.cc/Cx71Xfp8/Health-Id2.png",
     dotsOptions: { type: "classy", color: "#6a1a4c" },
     cornersSquareOptions: { type: "extra-rounded", color: "#000000" },
     backgroundOptions: {
