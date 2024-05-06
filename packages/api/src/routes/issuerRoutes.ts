@@ -38,7 +38,7 @@ const svc = [
   }
 ]
 
-const didHandler = didMethod.driver({ method: 'moncon', service: svc })
+const didHandler = didMethod.driver({ method: 'healthid', service: svc })
 
 const router = express.Router();
 

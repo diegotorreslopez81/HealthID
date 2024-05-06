@@ -27,7 +27,7 @@ const svc = [
   }
 ]
 
-const didHandler = didMethod.driver({ method: 'moncon', service: svc })
+const didHandler = didMethod.driver({ method: 'healthid', service: svc })
 
 router.get("/users", async (req, res) => {
   const response = await auth.listUsers();

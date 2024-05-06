@@ -51,7 +51,7 @@ const Settings = () => {
       })
     }
 
-    saveAs(keypairBlob, "moncon_wallet_pbkdf.json");
+    saveAs(keypairBlob, "healthId_wallet_pbkdf.json");
 
     return;
   }

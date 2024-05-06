@@ -85,7 +85,7 @@ const ReadQRCode = ({ setQrResponse, QrScan }: { setQrResponse: any, QrScan: any
                     fontWeight: "normal",
                   }}
                 >
-                  To use Moncon Wallet go to the web to unlock on your computer
+                  To use HealthId Wallet go to the web to unlock on your computer
                 </Typography>
               </Grid>
               <div
