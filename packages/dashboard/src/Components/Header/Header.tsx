@@ -9,7 +9,7 @@ import {
   ROLE_PUBLISHER,
   ROLES_DEFAULT_ROUTES,
 } from "../../Constants";
-import HealthID_Logo from "../../Assets/Images/HealthID-horizontal.png";
+import HealthID_Logo from "../../Assets/Images/HealthID-horizontal-small.png";
 import { AppBar, Toolbar, useMediaQuery, Button } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import Link from "../Link/Link";
@@ -44,7 +44,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   logo: {
-    maxWidth: 100,
+    maxWidth: 175,
+    objectFit: "cover",
+    //@ts-ignore
+    aspectRatio: "2.5",
   },
   button: {
     marginRight: 20,

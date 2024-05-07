@@ -28,10 +28,12 @@ export const useStyles = makeStyles((theme) => ({
   },
   logo: {
     maxWidth: theme.spacing(50),
+    aspectRatio: "2.5",
+    objectFit: "cover",
     marginBottom: 40,
   },
   claims: {
-    
+
   },
   paper: {
     width: theme.spacing(40),
@@ -68,7 +70,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: 0,
     textAlign: "center",
     alignContent: "center",
-    justifyContent: "center",    
+    justifyContent: "center",
   },
   decoratedText: {
     textDecoration: "line-through",
